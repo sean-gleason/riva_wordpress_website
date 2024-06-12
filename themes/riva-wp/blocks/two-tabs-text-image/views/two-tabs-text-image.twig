@@ -1,0 +1,147 @@
+{#
+/**
+ * Block Name: Two Tabs - Text & Image Block
+ *
+ * This is the template that displays the Tab block.
+ *
+ * Variables:
+ * - content
+ *  - tab_title
+ *  - tab_items (repeater)
+ *    - heading
+ *    - column_text  (description field)
+ *    - column_image
+ *    - cta_button 
+ *      - cta_link
+ *      - cta_text
+ * - block
+ *  - id
+ * - is_preview
+ */
+#}
+{# Process Fields #}
+{% set tab_1 = content.tabs[0] %}
+{% set tab_2 = content.tabs[1] %}
+
+{# Build Attributes #}
+{% set id = 'two-tabs-id--' ~ block.id %}
+{% set classes = 'container px-lg-5 pt-5 two-tabs-block' %}
+
+<!-- TWO TABS -->
+{% block tabs %}
+{% if content.tabs is not empty %}
+	<section class="{{ classes }}{% if block.className %} {{ block.className }}{% endif %}" id="{{ id }}-extra">
+		<div class="row">
+			{# Tab Headers #}
+			<ul class="col-12 text-center two-tabs-block__toggle" role="tablist">
+				{% for item in content.tabs %}
+					{# Process Fields #}
+					{% set item_title = item.tab_title %}
+
+					{% if loop.index == 1 %}
+						{% set item_order = true %}
+					{% else %}
+						{% set item_order = false %}
+					{% endif %}
+
+					{# Build Attributes #}
+					{% set item_classes = 'two-tabs-block__tab' %}
+
+					{% set id_index = block.id ~ '-' ~ loop.index %}
+					{% set item_id = 'tab-item-id--' ~ id_index %}
+					{% set item_title_id = 'tab-item__title-id--' ~ id_index %}
+					{% set item_panel_id = item_id ~ '__panel' %}
+
+					<li class="{% if item_order == true %}current{% endif %}">
+						<a aria-controls="{{ item_panel_id }}"
+						aria-selected="{{ item_order }}"
+						href="#{{ item_panel_id }}"
+						id="{{ item_id }}"
+						{% if item_order == false %}tabindex="-1"{% endif %}
+						class="two-tabs-block__switch tab {% if item_order == true %}selected{% endif %}">
+							{{ item_title }}
+						</a>
+					</li>					
+				{% endfor %}
+			</ul>
+
+			{# Tab Panels #}
+			{% for item in content.tabs %}
+				{# Process Fields #}
+				{% set item_title = item.tab_title %}
+				{% set item_heading = item.heading %}
+
+				{% if loop.index == 1 %}
+					{% set item_order = true %}
+				{% else %}
+					{% set item_order = false %}
+				{% endif %}
+
+				{# Build Attributes #}
+				{% set item_classes = 'two-tabs-block__tab' %}
+
+				{% set id_index = block.id ~ '-' ~ loop.index %}
+				{% set item_id = 'tab-item-id--' ~ id_index %}
+				{% set item_title_id = 'tab-item__title-id--' ~ id_index %}
+				{% set item_panel_id = item_id ~ '__panel' %}
+
+				<div aria-labelledby="{{ item_panel_id }}"
+					class="two-tabs-block__tab tab-panel {% if item_order == true %}current{% else %}hidden{% endif %}"
+					id="{{ item_panel_id }}"
+					role="tabpanel">
+					<div class="row">
+						<div class="col-12 text-center">
+							<h2>{{ item_heading }}</h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<img class="img-fluid w-100" src="{{ item.column_image.url }}" alt="{{ item.column_image.alt }}" />
+						</div>
+						<div class="col-12 col-lg-6 mt-4">
+							<div class="two-tabs-block">
+								<div class="row">
+									{% if item.left_column_text is not empty %}
+										<div class="col-12 col-lg-6 pb-3">
+											{{ item.left_column_text }}
+										</div>
+									{% endif %}
+									{% if item.right_column_text is not empty %}
+										<div class="col-12 col-lg-6 pb-3">
+											{{ item.right_column_text }}
+										</div>
+									{% endif %}
+								</div>
+								<div class="row">
+									{% if item.left_column_text_bottom is not empty %}
+										<div class="col-12 col-lg-6 pb-3">
+											{{ item.left_column_text_bottom }}
+										</div>
+									{% endif %}
+									{% if item.right_column_text is not empty %}
+										<div class="col-12 col-lg-6 pb-3">
+											{{ item.right_column_text_bottom }}
+										</div>
+									{% endif %}
+								</div>
+								{% if item.cta_button.url is not empty %}
+									<div class="row">
+										<div class="col-12 text-start">
+											<a class="btn btn-primary rounded-pill" href="{{ item.cta_button.url }}" title="{{ item.cta_button.title }}" target="{% if item.cta_button.target %}{{ item.cta_button.target }}{% else %}_self{% endif %}">
+												{{ item.cta_button.title }}
+											</a>
+										</div>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+			{% endfor %}
+		</div>
+
+	</section>
+{% endif %}
+
+{% endblock %}

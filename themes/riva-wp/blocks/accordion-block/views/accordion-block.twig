@@ -1,0 +1,121 @@
+{#
+/**
+ * Block Name: Accordion
+ *
+ * This is the template that displays the Accordion block.
+ *
+ * Variables:
+ * - content
+ *  - heading
+ *  - accordion_items
+ *    - accordion_item_title
+ *    - wysiwyg (description field)
+ *    - cta_group (repeater)
+ *      - cta_link
+ *      - cta_text
+ * - block
+ *  - id
+ *  - className
+ * - is_preview
+ */
+#}
+
+{# Process Fields #}
+{% set title = content.heading %}
+{% set description = content.description %}
+{% set items = content.accordion_items %}
+
+{# Build Attributes #}
+{% set classes = 'block module module--accordion accordion my-mb-5' %}
+{% set id = 'accordion-id--' ~ block.id %}
+{% set title_id = 'accordion__title-id--' ~ block.id %}
+
+{% block accordion %}
+	{# Markup #}
+	<section
+		id="{{ id }}"
+		class="{{ classes }} {{ block.className ? block.className : '' }}"
+		{% if title is not empty %}
+			aria-labelledby="{{ title_id }}"
+		{% endif %}
+	>
+		<div class="row-fluid container--narrow">
+			<div class="col">
+				<hgroup>
+					{% if title is not empty %}
+						<h2 class="accordion__heading" id="{{ title_id }}">
+							{{- title -}}
+						</h2>
+					{% endif %}
+
+				</hgroup>
+
+				{% if description is not empty %}
+					<p class="accordion__description">
+						{{- description -}}
+					</p>
+				{% endif %}
+
+				{% if items is not empty %}
+					<div class="accordion__accordion-items">
+						{% for item in content.accordion_items %}
+
+							{# Process Fields #}
+							{% set item_title = item.accordion_item_title %}
+							{% set item_content = item.wysiwyg %}
+
+							{# Build Attributes #}
+							{% set item_classes = 'accordion-item' %}
+
+							{% set id_index = block.id ~ '-' ~ loop.index %}
+							{% set item_id = 'accordion-item-id--' ~ id_index %}
+							{% set item_title_id = 'accordion-item__title-id--' ~ id_index %}
+							{% set item_panel_id = item_id ~ '__panel' %}
+
+							{# Markup #}
+							<article id="{{ item_id }}" class="{{ item_classes }}" aria-labelledby="{{ item_title_id }}">
+								<h3 class="accordion-item__heading" id="{{ item_title_id }}">
+									<button
+										class="accordion-item__toggle"
+										aria-expanded="false"
+										aria-controls="{{ item_panel_id }}"
+									>
+										<span class="accordion-item__title">
+											{{- item_title -}}
+										</span>
+
+										<span class="accordion-item__icon" aria-hidden="true">
+											<img src="/wp-content/themes/riva-wp/images/icons/icon-expand-big.png" />
+										</span>
+									</button>
+								</h3>
+
+								<div
+									class="accordion-item__panel text-formatted"
+									id="{{ item_panel_id }}"
+									role="region"
+									hidden
+								>
+									{{ item_content }}
+
+									<div class="accordion-item__panel__buttons">
+										{% for button in item.cta_group %}
+											<a class="btn btn-primary rounded-pill" href="{{ button.cta_link.url }}" title="{{ button.cta_link.title }}" target="{% if button.cta_link.target %}{{ button.cta_link.target }}{% else %}_self{% endif %}">
+												{% if button.cta_text %}
+													{{ button.cta_text }}
+												{% else %}
+													{{ button.cta_link.title }}
+												{% endif %}
+											</a>
+										{% endfor %}
+									</div>
+								</div>
+							</article>
+
+						{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</section>
+{% endblock %}

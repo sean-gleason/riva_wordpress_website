@@ -1,0 +1,55 @@
+{#
+/**
+ * Block Name: Contract Vehicles
+ *
+ * This is the template that displays the People List block.
+ *
+ * Variables:
+ * - heading
+ *  - description
+ *  - cta
+ *  - background image
+ * - block
+ *  - id
+ * - is_preview
+ */
+#}
+{# Process Fields #}
+
+{# Build Attributes #}
+{% set id = 'contract-vehicles-id--' ~ block.id %}
+
+<!-- CTA With Background Image -->
+{% block cta_with_background_image %}
+<div class="contract-vehicles" id="{{ id }}">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h2>{{ content.heading }}</h2>
+				<p class="description">{{ content.description }}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 text-center">
+				<ul class="contract-vehicles__list">
+					{% for vehicle in content.contract_vehicles_list %}
+						{% set post = vehicle.contract_vehicle %}
+						{% set featured_image = function('get_the_post_thumbnail', post.ID) %}
+						{% set permalink = function('get_permalink', post.ID) %}
+
+						<li class="contract-vehicles__list__vehicle">
+							<div class="icon-container"></div>
+							<div class="content-wrapper position-relative d-flex">
+								{{ featured_image }}
+								<a class="stretched-link" href="{{ permalink }}" target="_self" title="Link to {{ post.post_title }}">
+									<span class="name">{{ post.post_title }}</span>
+								</a>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

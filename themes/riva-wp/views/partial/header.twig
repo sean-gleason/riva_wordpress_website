@@ -1,0 +1,68 @@
+<header
+	id="header">
+
+	<!-- Navbar Start -->
+
+		<nav class="navbar navbar-expand-lg navbar-dark wow fadeIn" data-wow-delay="0.1s">
+			<div class="container">
+				<a href="/" class="navbar-brand ms-4 ms-lg-0">
+		            <div class="fw-bold text-primary m-0">
+						{% if (options.logos and options.logos.header_logo) %}
+							<img src="{{ options.logos.header_logo.url|resize(null, 55) }}" alt="RIVA company logo" >
+						{% else %}
+							<img src="/wp-content/themes/riva-wp/images/logo.png" alt="RIVA company logo" >
+						{% endif %}
+						<span class="visually-hidden">RIVA Home</span>
+					</div>
+		        </a>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+					<span class="navbar-text">Menu</span>
+					<span class="navbar-toggler-icon"></span>
+					<a class="nav-link contact-us menu-item menu-item-type-custom menu-item-object-custom menu-item-16" href="#">Contact Us</a>
+				</button>
+
+				{# Load 'Main Menu' and 'Secondary Menu' Content #}
+				{% include 'partial/navigation.twig' with { 'nav_items' : main_navigation.get_items } %}
+
+			</div>
+		</nav>
+	<!-- Navbar End -->
+
+	<!-- Hero Start -->
+	{% if archive_type and archive_type  == 'insights' %}
+		{% set hero_block = options.insights_archive_settings.hero_block %}
+	{% elseif archive_type and archive_type  == 'leadership' %}
+		{% set hero_block = options.leadership_archive_settings.hero_block %}
+	{% elseif is_404 and page_options.the_404_settings.hero_block %}
+		{# If this is 404 page, load the 404 hero-block #}
+		{% set hero_block = page_options.the_404_settings.hero_block %}
+	{% elseif page_type == 'single-insights' %}
+		{% include 'partial/hero-single-insights.twig' %}
+	{% else %}
+		{% set hero_block = post.meta('hero_block') %}
+	{% endif %}
+
+	{% if archive_type and archive_type  == 'insights' %}
+		{% include 'partial/hero-no-image.twig' %}
+	{% elseif hero_block %}
+		{% if hero_block.layout == 'homepage' %}
+			{% include 'partial/hero-homepage.twig' %}
+		{% elseif hero_block.layout == 'landing_page' %}
+			{% include 'partial/hero-landing-page.twig' %}
+		{% elseif hero_block.layout == 'bio_hero' %}
+			{% include 'partial/hero-bio.twig' %}
+		{% else %}
+			{% include 'partial/hero-no-image.twig' %}
+		{% endif %}
+	{% elseif page_type != 'single-insights' %}
+		{% include 'partial/hero-no-image.twig' %}
+	{% elseif is_404 and page_options.the_404_settings.hero_block %}
+		{# If this is 404 page, load the 404 hero-block #}
+		{% set hero_block = page_options.the_404_settings.hero_block %}
+	{% endif %}
+	<!-- Hero End -->
+
+
+
+</header>

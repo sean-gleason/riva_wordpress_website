@@ -1,0 +1,32 @@
+{% set image = Image(image) %}
+
+<style>
+	.cta-with-background-image {
+		background: transparent url('{{ image.src|resize(600) }}') no-repeat;
+		background-size: cover;
+	}
+	@media screen and (min-width: 600px) {
+		.cta-with-background-image {
+			background: transparent url('{{ image.src|resize(900) }}') no-repeat;
+			background-size: cover;
+		}
+	}
+	@media screen and (min-width: 900px) {
+		.cta-with-background-image {
+			background: transparent url('{{ image.src|resize(1200) }}') no-repeat;
+			background-size: cover;
+		}
+	}
+	@media screen and (min-width: 1200px) {
+		.cta-with-background-image {
+			background: transparent url('{{ image.src|resize(1400) }}') no-repeat;
+			background-size: cover;
+		}
+	}
+	@media screen and (min-width: 1400px) {
+		.cta-with-background-image {
+			background: transparent url('{{ image.src }}') no-repeat;
+			background-size: cover;
+		}
+	}
+</style>

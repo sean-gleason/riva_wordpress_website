@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<ruleset name="taoti_theme">
+	<description>Customized WordPress Coding standards Riva WP's Theme.</description>
+	<arg name="extensions" value="php"/>
+
+	<!-- Assume UTF-8 -->
+    <config name="encoding" value="UTF-8" />
+
+	<!-- Scan all files in directory -->
+    <file>.</file>
+
+	<!-- Exclude Third Party and generated Code. -->
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/js/*</exclude-pattern>
+	<exclude-pattern>*/scss/*</exclude-pattern>
+	<exclude-pattern>*/css/*</exclude-pattern>
+	<exclude-pattern>*/_bash/*</exclude-pattern>
+	<exclude-pattern>*/styles/*</exclude-pattern>
+
+	<!-- Show colors in console -->
+    <arg value="-colors"/>
+
+    <!-- Show sniff codes in all reports -->
+    <arg value="ns"/>
+
+	<config name="testVersion" value="8.1-"/>
+	<rule ref="PHPCompatibilityWP">
+	</rule>
+
+	<rule ref="PHPCompatibility">
+		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
+		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict" />
+		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
+		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict" />
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="Generic.Files.OneObjectStructurePerFile.MultipleFound" />
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralText" />
+	</rule>
+
+	<rule ref="WordPress-Core"/>
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeCloseParenthesis" />
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeOpenParenthesis" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.SpaceAfterOpenBracket" />
+	</rule>
+
+	<rule ref="WordPress-Extra">
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing" />
+		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent" />
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent.TabsUsed" />
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+		<exclude name="Squiz.Commenting.InlineComment.SpacingBefore" />
+	</rule>
+
+	<rule ref="WordPress-Docs"/>
+
+	<!-- WPCS Config -->
+	<config name="minimum_supported_wp_version" value="5.8.3"/>
+
+	<!-- Do not fail on warnings -->
+    <config name="ignore_warnings_on_exit" value="1" />
+</ruleset>

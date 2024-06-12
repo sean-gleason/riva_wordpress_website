@@ -1,0 +1,19 @@
+{% if main_navigation %}
+	<ul class="main-menu__list--subnav dropdown-menu" aria-labelledby="navbarDropdown{{ nav_item.id }}">
+		{% for child_item in children %}
+			<li class="main-menu--item--subnav{{ child_item.classes | join(' ') }}">
+				{% if child_item.children %}
+					<div class="main-menu--item--combo">
+						<a class="main-menu--item--subnav-link" target="{{ child_item.target }}" href="{{ child_item.link }}">{{ child_item.title }}</a>
+						<button class="subnav-trigger" title="Open submenu" style="width:24px;height:24px;>
+							{% include 'partial/chevron-down.twig' ignore missing %}
+						</button>
+					</div>
+					{% include 'partial/menu-children.twig' with { "children": child_item.children } %}
+				{% else %}
+					<a class="main-menu--item--subnav-link" target="{{ child_item.target }}" href="{{ child_item.link }}">{{ child_item.title }}</a>
+				{% endif %}
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}

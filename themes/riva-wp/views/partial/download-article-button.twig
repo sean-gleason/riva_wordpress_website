@@ -1,0 +1,16 @@
+{#
+	Download Article Button
+#}
+{% set gf_form_id = gf_form_id|default(1) %}
+
+<div class="btn btn-primary rounded-pill download">
+	<span>Download</span>
+	<div class="form">
+		{% if gf_form_id == 1 %}
+			{{ function('do_shortcode', '[gravityform id="1" title=false" ajax="true"]') }}
+		{% elseif gf_form_id == 3 %}
+			{{ function('do_shortcode', '[gravityform id="3" title=false" ajax="true"]') }}
+		{% endif %}
+	</div>
+
+</div>

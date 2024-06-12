@@ -1,0 +1,76 @@
+{#
+	Card: Default Layout
+
+	Fields:
+		- Image Option: Enable, Disable, or Big Image
+		- Show Term(s) Option: Enable or Disable
+		- Summary Option: Enable or Disable
+		- Featured Image
+		- Taxonomy: What taxonomy to sort by
+		- Card Title
+		- Card Link
+		- Card Link Text (via 'Link Override')
+
+		TODO: Rewrite ground-up for Pluribus
+#}
+
+<div class="card">
+	{% block content %}
+
+		{% if card_image %}
+			{% set image = card_image %}
+			<div class="card__image">
+				<div class="card__image__tags">
+					{% if is_featured %}
+						<span class="featured">Featured</span>
+					{% endif %}
+					{% if card_tag %}
+						<span class="tag">{{ card_tag }}</span>
+					{% endif %}
+				</div>
+				<img src="{{ image }}" class="" alt="{{ image.alt }}"/>
+			</div>
+		{% endif %}
+
+		<div class="card__content">
+			<div class="card__heading">
+
+				{% if card_type == 'sign-up' %}
+					<div class='arrow-icon'>
+						{{ source(directory ~ '/images/icons/icon-arrow-left-red.svg')}}
+					</div>
+				{% endif %}
+
+				<h2 class="card__title">
+					{% if card_link %}
+						<a class="card__title stretched-link" href="{{ card_link }}" title="Read about {{ card_link }}">
+							{{ card_title }}
+						</a>
+					{% else %}
+						{{ card_title }}
+					{% endif %}
+				</h2>
+				
+			</div>
+
+			{% if card_excerpt %}
+				<p class="card__content-summary">{{ card_excerpt }}</p>
+			{% endif %}
+
+			<div class="card__footer">
+				{% if card_author %}
+					<div class="author">
+						{% set author_image = function('get_the_post_thumbnail', card_author.ID) %}
+						{{ author_image }}
+						<span>{{ card_author.post_title }}</span>
+					</div>
+				{% endif %}	
+				{% if card_date %}
+					<div class="card__date">{{ card_date|date("M Y") }}</div>
+				{% endif %}
+			</div>
+
+		</div>
+
+	{% endblock %}
+</div>

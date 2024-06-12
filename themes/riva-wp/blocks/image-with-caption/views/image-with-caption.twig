@@ -1,0 +1,46 @@
+{#
+/**
+ * Block Name: Image With Caption
+ *
+ * This is the template that displays the example block.
+ *
+ * Variables:
+ * - content
+ *  - image
+ *  - content (description field)
+ *  - className
+ * - is_preview
+ */
+#}
+
+{% set classes = 'block module module--image-with-caption container my-3 my-md-5' %}
+
+{% block repeat_content %}
+	<section id="{{ block.id }}" class="{{ classes }}">
+		<div class="container--narrow">
+			<div class="row">
+				<div class="col-12 text-center">
+					<div class="module--image-with-caption--image">
+						<img src="{{ content.image.url }}" alt="{{ content.image.alt }}" />
+						<div class="zoom-in">
+							<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#ImageWithCaption{{ block.id }}">
+								<span>Click to zoom</span>
+							</button>
+						</div>
+						<div class="caption">
+							<span>{{ content.caption }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="ImageWithCaption{{ block.id }}">
+  		<div class="modal-dialog modal-xl modal-dialog-centered">
+    		<div class="modal-content">
+		      <img src="{{ content.image.url }}" alt="{{ content.image.alt }}" />
+			</div>
+		</div>
+	</div>
+{% endblock %}

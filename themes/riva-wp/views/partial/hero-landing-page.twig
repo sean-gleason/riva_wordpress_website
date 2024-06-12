@@ -1,0 +1,58 @@
+{% set background_horizontal_position = hero_block.background_horizontal_position %}
+{% set use_custom_value_por_horizontal_background_position = hero_block.use_custom_value_por_horizontal_background_position %}
+{% set custom_background_horizontal_position = hero_block.custom_background_horizontal_position %}
+
+{% if (use_custom_value_por_horizontal_background_position) %}
+	{% 	set background_position_class = '' %}
+	{% 	set custom_background_position_px = 'background-position-x: ' ~ custom_background_horizontal_position ~ 'px' %}
+{% else %}
+	{% 	set background_position_class = 'background-position-' ~ hero_block.background_horizontal_position %}
+	{% 	set custom_background_position_px = '' %}
+{% endif %}
+
+<style>
+    .hero.landing-page::before {
+        background-image: url({{ hero_block.background_image.url }});
+        {{ custom_background_position_px }}
+    }
+</style>
+
+<div class="container-fluid p-0">
+	<div class="hero landing-page {{ background_position_class }}">
+		<div class="hero__inner container">
+			{% block breadcrumbs %}
+				{% if breadcrumbs %}
+					<div class="row">
+						<div class="col-12 pt-2 text-left">
+							<div class="breadcrumbs">{{ breadcrumbs }}</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endblock %}
+			<div class="hero__caption px-3">
+				{# If there's no image on the hero, the content should be 100% wide #}
+				{% if archive_type and archive_type == 'insights' %}
+					<div class="col-12 pt-5">
+				{% else %}
+					<div class="col-12 col-sm-12 col-md-8 col-lg-6 pt-5">
+				{% endif %}
+					<h1 class="display-4 text-white mb-3">{{ hero_block.headline }}</h1>
+					{% if hero_block.content %}
+						<p class="text-white mb-5 col-lg-10">{{ hero_block.content }}</p>
+					{% endif %}
+					{% if hero_block.cta_button and '' != hero_block.cta_button.cta_link %}
+						<a class="btn btn-primary rounded-pill" href="{{ hero_block.cta_button.cta_link.url }}" title="{{ hero_block.cta_button.cta_link.title }}" target="{% if hero_block.cta_button.cta_link.target %}{{ hero_block.cta_button.cta_link.target }}{% else %}_self{% endif %}">
+							<span class="button-text">
+								{% if hero_block.cta_button.cta_text %}
+									{{ hero_block.cta_button.cta_text }}
+								{% else %}
+									{{ hero_block.cta_button.cta_link.title }}
+								{% endif %}
+							</span>
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

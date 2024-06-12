@@ -1,0 +1,16 @@
+.paginationWrap {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  > .screen-reader-text {
+    display: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+}

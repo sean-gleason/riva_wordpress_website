@@ -1,0 +1,78 @@
+{#
+/**
+ * Block Name: Carousel
+ *
+ * This is the template that displays the Standard Carousel
+ *
+ * Variables:
+ * - content
+ *  - heading
+ *  -  carousel_items
+ *    - carousel_item_image
+ *    - carousel_item_caption
+ * - block
+ *  - id
+ *  - className
+ * - is_preview
+#}
+
+{# Process Fields #}
+{% set title = content.heading %}
+{% set items = content.carousel_items %}
+
+{# Build Attributes #}
+{% set classes = 'block module module--carousel carousel row-fluid container' %}
+{% set id = 'carousel-id--' ~ block.id %}
+{% set title_id = 'carousel__title-id--' ~ block.id %}
+
+
+<!-- Carousel -->
+<div class="container-fluid carousel">
+	<div class="row">
+		<div class="col-12 text-center">
+			<h2>{{ title }}</h2>
+		</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col-12">
+			<div class="row ">
+				<div class="carousel__items">
+					{% for item in items %}
+						<div class="carousel__items__item">
+							<div class="container">
+								<div class="row justify-content-center">
+									<div class="col-12 col-lg-6 align-self-center col-text">
+										<span class="slide-number">{{loop.index}}</span>
+										<hgroup>
+											<h3>{{ item.carousel_item_title }}</h3>
+											{% if item.carousel_item_tagline is not empty %}
+												<p class="tagline">{{ item.carousel_item_tagline }}</p>
+											{% endif %}
+										</hgroup>
+										<p>{{ item.carousel_item_description }}</p>
+										{% if item.carousel_item_cta.cta_link.url is not empty %}
+											<a class="btn btn-primary rounded-pill" href="{{ item.carousel_item_cta.cta_link.url }}" title="{{ item.carousel_item_cta.cta_link.title }}" target="{% if item.carousel_item_cta.cta_link.target %}{{ item.carousel_item_cta.cta_link.target }}{% else %}_self{% endif %}">
+												{% if item.carousel_item_cta.link_text is not empty %}
+													{{ item.carousel_item_cta.link_text }}
+												{% else %}
+													{{ item.carousel_item_cta.cta_link.title }}
+												{% endif %}
+											</a>
+										{% endif %}
+									</div>
+									<div class="col-12 col-lg-6">
+										{# Process Sub-Fields #}
+										{% set image = item.carousel_item_image %}
+										<img class="mx-auto d-block" src="{{ image.url|resize(668, 477) }}" alt="{{ image.alt }}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<button class="carousel-arrow carousel-arrow--prev slick-prev slick-arrow">Prev</button>
+				<button class="carousel-arrow carousel-arrow--next slick-next slick-arrow">Next</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,137 @@
+.gform_heading {
+  display: none;
+}
+
+.gfield {
+  margin-bottom: 1rem;
+}
+
+.gform_button {
+  @include button--rounded--orange();
+  border-radius: 30px;
+  margin: 0 !important;
+}
+
+input[type=text],
+input[type=email] {
+  padding: 12px 20px 12px 20px;
+  font-family: $font-kumbh-sans;
+  font-size: 16px;
+  font-weight: 400;
+  color: $color--gray-dark;
+  margin-bottom: 10px;
+  border: 2px solid $color--gray-dark;
+  border-radius: 20px;
+}
+
+.gform_fields {
+
+  .gfield--type-text,
+  .gfield--type-email {
+    &.field_sublabel_below {
+      position: relative;
+
+      .gfield_label {
+        font-family: $font-kumbh-sans;
+        font-size: 14px !important;
+        letter-spacing: -0.16px;
+        color: $color--gray-dark;
+        font-weight: 400 !important;
+        text-transform: none;
+        margin-bottom: 0;
+        position: absolute;
+        left: 20px;
+        background: $color--white;
+        top: -10px;
+        padding: 0 5px !important;
+      }
+    }
+  }
+
+  // Text & Email fields
+  .ginput_container_text {
+    input {
+      font-family: $font-kumbh-sans;
+      font-size: 16px !important;
+      color: $color--gray-dark;
+      padding: 10px 30px !important;
+      margin-bottom: 10px !important;
+    }
+  }
+
+  /** Text Area **/
+  .ginput_container_textarea {
+
+    textarea {
+      border: 2px solid $color--gray-dark;
+      border-radius: 25px;
+    }
+  }
+
+  /** Select **/
+  .gfield--type-select {
+
+
+
+    select {
+      background: $color--white;
+      box-shadow: 0px 5px 10px #00000029;
+      border-radius: 30px;
+      border: none;
+      appearance: none;
+      background-position: right 0.5rem center;
+      background-image: url("data:image/svg+xml;charset=utf-8,<svg width='10' height='6' fill='none' xmlns='http:%2F%2Fwww.w3.org/2000/svg'><path d='M1 1l4 4 4-4' stroke='%23D1372B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+      background-repeat: no-repeat;
+    }
+  }
+
+  /** Checkbox **/
+
+
+  /** Radio Button **/
+  .gfield--type-radio,
+  .gfield--type-checkbox {
+    input {
+      border: 1px solid #262A33;
+
+      &:checked {
+        background-color: $color--red;
+        accent-color: $color--red;
+      }
+    }
+  }
+
+  /** Labels **/
+  .ginput_container_textarea,
+  .gfield--type-select,
+  .gfield--type-radio {
+    .gfield_label {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      color: #4E4E4E;
+      padding: 15px 20px;
+    }
+  }
+}
+
+.gform_footer {
+  justify-content: center;
+}
+
+#gform_1 {
+
+  input[type=text],
+  input[type=email] {
+    max-width: 252px;
+  }
+
+  .gform_fields {
+    width: 252px !important;
+  }
+}
+
+#gform_confirmation_message_4 {
+  padding-bottom: 4rem;
+
+}

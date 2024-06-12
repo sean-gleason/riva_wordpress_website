@@ -1,0 +1,43 @@
+<div class="container-fluid p-0">
+	<div class="hero no-image" style="background-image: url('/wp-content/themes/riva-wp/images/bg-hero-no-image.jpg');">
+		<div class="hero__inner container">
+			<div class="hero__caption px-5">
+				{% block breadcrumbs %}
+					{% if breadcrumbs %}
+						<div class="row">
+							<div class="col-12 pt-2 text-left">
+								<div class="breadcrumbs">{{ breadcrumbs }}</div>
+							</div>
+						</div>
+					{% endif %}
+				{% endblock %}
+				<div class="col-lg-12 pt-3 text-center">
+					<h1 class="display-4 text-white mb-3">
+						{% if hero_block.headline %}
+							{{ hero_block.headline }}
+						{% else %}
+							Landing Page No Image
+						{% endif %}
+					</h1>
+					<p class="text-white mb-5">
+						{% if hero_block.content %}
+							{{ hero_block.content }}
+						{% else %}
+						{% endif %}
+					</p>
+					{% if hero_block.cta_button and '' != hero_block.cta_button.cta_link %}
+						<a class="btn btn-primary rounded-pill" href="{{ hero_block.cta_button.cta_link.url }}" title="{{ hero_block.cta_button.cta_link.title }}" target="{% if hero_block.cta_button.cta_link.target %}{{ hero_block.cta_button.cta_link.target }}{% else %}_self{% endif %}">
+							<span class="button-text">
+								{% if hero_block.cta_button.cta_text %}
+									{{ hero_block.cta_button.cta_text }}
+								{% else %}
+									{{ hero_block.cta_button.cta_link.title }}
+								{% endif %}
+							</span>
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

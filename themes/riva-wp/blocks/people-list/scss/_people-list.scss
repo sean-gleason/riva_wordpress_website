@@ -1,0 +1,78 @@
+.people-list {
+  // padding-top: 70px;
+  // padding-bottom: 70px;
+
+  // @media screen and (max-width: $breakpoint-tablet) {
+  //   padding: 70px 0;
+  // }
+
+  h3 {
+    text-align: center;
+    font-family: $font-kumbh-sans;
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 55px;
+    letter-spacing: -1px;
+    color: $color--gray-dark;
+  }
+
+  &__description {
+    font-family: $font-kumbh-sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.4px;
+    color: $color--gray-dark;
+    margin-top: 12px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    @media screen and (max-width: $width--l) {
+      padding-left: 0;
+    }
+
+    &__person {
+      @include people-card();
+
+      &:hover {
+        a.stretched-link {
+          text-decoration: none;
+          color: $color--red;
+          position: relative;
+
+          &::after {
+            content: "";
+            position: absolute;
+            background: url('/wp-content/themes/riva-wp/images/icons/ico-arrow-read-more-long.svg');
+            width: 33px;
+            background-repeat: no-repeat;
+            left: 40px;
+            top: 7px;
+          }
+        }
+      }
+
+      a.stretched-link {
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          background: url('/wp-content/themes/riva-wp/images/icons/ico-arrow-read-more-short.svg');
+          background-repeat: no-repeat;
+          left: 40px;
+          top: 7px;
+          width: 13px;
+          height: 8px;
+        }
+      }
+    }
+  }
+}

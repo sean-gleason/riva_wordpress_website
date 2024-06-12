@@ -1,0 +1,51 @@
+{#
+/**
+ * Block Name: Testimonial
+ *
+ * This is the template that displays the Testimonial block.
+ *
+ * Variables:
+ * - description
+ *  - person name
+ *  - person image
+ *  - testimonial date
+ * - block
+ *  - id
+ * - is_preview
+ */
+#}
+{# Process Fields #}
+
+{# Build Attributes #}
+{% set id = 'testimonial-id--' ~ block.id %}
+{% set classes = 'testimonial my-3 my-md-5' %}
+
+<!-- Testimonial -->
+{% block testimonial %}
+<section class="{{ classes }}{% if block.className %} {{ block.className }}{% endif %}" id="{{ id }}">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center">
+				<img class="mx-auto d-block" src="/wp-content/themes/riva-wp/images/icons/icon--quote.svg" aria-hidden="true" role="presentation" alt="Image of one double-quote." />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 ">
+				<div class="row text-center">
+					<h2 class="visually-hidden">Testimonial from {{ content.person_name }}</h2>
+					<p class="testimonial-text">{{ content.description }}</p>
+					<div class="testimonial__person">
+						<div class="testimonial__person__image">
+							<img src="{{ content.person_image.url }}" alt="{{ content.person_image.alt }}" />
+						</div>
+						<div class="testimonial__person__info">
+							<span class="name" aria-hidden="true">{{ content.person_name }}</span>
+							<span class="date">{{ content.testimonial_date|date("M d, Y h:i A") }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

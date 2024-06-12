@@ -1,0 +1,21 @@
+// main entry point and importer
+// the order of @import's here is important.
+@charset 'utf-8';
+
+// overall site variables and settings.
+@import '0.bootstrap/config/**/*.scss';
+@import 'settings';
+@import '0.bootstrap/theme/**/*.scss';
+@import '1.mixins/**/*.scss';
+@import '2.wp-core/**/*.scss';
+
+@import '3.global/**/*.scss';
+@import '4.components/**/*.scss';
+
+// Blocks and modules
+@import '../blocks/**/*.scss';
+
+// TODO: page specific overrides for blocks/modules.
+
+// Overrides, finally
+@import 'overrides';

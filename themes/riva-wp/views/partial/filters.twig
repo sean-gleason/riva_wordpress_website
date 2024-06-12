@@ -1,0 +1,117 @@
+<div class="row filters">
+	<h2 class="visually-hidden">{{ post_type|capitalize }} Listing Content</h2>
+    <div class="col-12 col-lg-2">
+		
+		<div class="filter-sidebar">
+			<div class="filter-sidebar__headline">
+				<h3 class="filter-sidebar__heading">Filter by:</h3>
+				<a href="javascript:void(0);" title="Clear All" class="tag-button button__clear-all">
+					<span class="button-text">Clear All</span>
+					<span class="button-text">X</span>
+				</a>
+			</div>
+			
+			<div class="filter-sidebar__search-box">
+				<h4 class="filter-sidebar__heading">Keyword</h4>
+				<div class="filter-sidebar__search-box__field">
+					<input type="text" placeholder="Search" class="search-field field-search-ajax" />
+					<button type="button" class="search-button"><span class="visually-hidden">Search for Keyword</span></button>
+				</div>
+			</div>
+
+			<div class='filter-taxonomy-container'>
+
+				{% if filter_terms %}
+					{% for key, terms in filter_terms %}
+						<div class="filter-sidebar__taxonomy">
+							<h4 class="filter-sidebar__taxonomy-title" data-target="{{ key }}">
+								<div class='taxonomy-name__count'>
+									{% if key == 'capability' %}
+										<span>Solutions</span>
+									{% else %}
+										<span>{{ key|replace({'-': ' ' })|capitalize }}</span>
+									{% endif %}
+									<span class='count'></span>
+								</div>
+
+								<div class="plus_icon">
+									<div class="vertical-line"></div>
+									<div class="horizontal-line"></div>
+								</div>
+								
+							</h4>
+
+							<div class="terms-container taxonomy-{{ key }}" data-tax="{{ key }}">
+								<!--div class="search-input">
+									<input type="text" class="search-terms" data-tax-target="{{ key }}" />
+								</div-->
+								<ul class="terms" data-tax="{{ key }}">
+									{% for term in terms %}
+										<li>
+											<input class="checkbox-terms" type="checkbox" value="{{ term.term_id }}" data-tax="{{ key }}" data-name="{{ term.name }}"/>
+											<label>{{ term.name }}</label>
+										</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+
+				<div class="filter-sidebar__button">
+					<a href="javascript:void(0);" title="Apply Filter" class="btn-do-filter button button__primary  button__primary--orange  button__mode--dark">
+						<span class="button-text">Apply Filters</span>
+					</a>
+				</div>
+
+				<div class="tags-filtered"></div>
+			</div>
+		</div>
+			
+		
+    </div>
+	<div class="col-12 col-lg-10 results-container">
+		<div class="row">
+			<div class="col-12">
+				<div class="archive-content__inner__summary">
+					<div class="results-found">
+						<span class="results-found-qty"></span>
+					</div>
+					<div class="filter-sidebar__taxonomy">
+						<label class="visually-hidden" for="sort">Sort:</label>
+						<select name="sort" id="sort" class="filters-sort">
+							<option value="default">- Sort -</option>
+							<option value="latest">Newest to Oldest</option>
+							<option value="oldest">Oldest to Newest</option>
+							<option value="title">Alphabetically</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<h3 class="visually-hidden">Filtered Content Results</h3>
+		<div class="row">
+			<div class="col-12">
+				<div class="results-container__inner">
+					<div class="results-container__posts"></div>
+					<div class="results-container__loader">
+						<div class="spinner">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+					<div class="results-container__pagination">
+						{% include 'partial/view-more.twig' %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<form>
+	<input type="hidden" id="action" name="action" value="taoti_archive_query">
+	<input type="hidden" id="post_type" name="post_type" value="{{ post_type }}">
+	<input type="hidden" id="paged" name="paged" value="1">
+</form>

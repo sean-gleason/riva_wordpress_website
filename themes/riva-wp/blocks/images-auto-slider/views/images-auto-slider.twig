@@ -1,0 +1,78 @@
+{#
+/**
+ * Block Name: Images Auto Slider
+ *
+ * This is the template that displays the Standard Carousel of images
+ *
+ * Variables:
+ * - content
+ *  - background
+ *  - heading
+ *  - description
+ *  -  images
+ *    - image (array)
+ *    - image_title
+ *  -  cta
+ *    - cta_link (array)
+ *    - cta_text
+ * - block
+ *  - id
+ *  - className
+ * - is_preview
+#}
+
+{# Process Fields #}
+{% set title = content.heading %}
+{% set items = content.carousel_items %}
+
+{# Build Attributes #}
+{% set id = 'images-auto-slider-id--' ~ block.id %}
+{% set classes = 'container-fluid image-auto-slider my-3 my-md-5' %}
+
+<!-- Image Auto Slider -->
+{% block image_auto_slider %}
+	<section id="{{ id }}" class="{{ classes }} {{ content.background }}{% if block.className %} {{ block.className }}{% endif %}">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-lg-6 text-center offset-lg-3">
+					<h2>{{ content.heading }}</h2>
+					{% if content.description is not empty %}
+						<p>{{ content.description }}</p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+			<div class="row mt-5">
+				<div class="col-12 text-center">
+					<h3 class="visually-hidden">{{ content.heading }} Image Carousel</h3>
+					<div class="image-auto-slider__items">
+						{% for image in content.images %}
+							<div>
+								<img class="mx-auto d-block" src="{{ image.image.url }}" alt="{{ image.image.alt }}" />
+								{% if image.image_title is not empty %}
+									<span class="visually-hidden">{{ image.image_title }}</span>
+								{% else %}
+									<span class="visually-hidden">{{ image.image.alt }}</span>
+								{% endif %}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		<div class="container">
+			{% if content.cta.cta_link.url is not empty %}
+				<div class="row">
+					<div class="col-12 text-center">
+						<a class="btn btn-primary rounded-pill" href="{{ content.cta.cta_link.url }}" title="{{ content.cta.cta_link.title }}" target="{% if content.cta.cta_link.target %}{{ content.cta.cta_link.target }}{% else %}_self{% endif %}">
+							{% if content.cta.cta_text is not empty %}
+								{{ content.cta.cta_text }}
+							{% else %}
+								{{ content.cta.cta_link.title }}
+							{% endif %}
+						</a>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</section>
+{% endblock %}

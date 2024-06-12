@@ -1,0 +1,38 @@
+<div class="image-combo {{ layout }}">
+    <div class="image-combo--image{{ img_classes ? ' ' ~ img_classes : ''}}">
+        {# Placeholder for image #}
+        <img src="{{ thumbnail }}" />
+    </div>
+    <div class="image-combo--text">
+        <div class="image-combo--text__inner ">
+        {% block text %}
+            {# import buttons #}
+            {% import '/partial/macros/buttons.twig' as button %}
+
+            <div class="image-combo__tags">
+                {{ button.tagButton('tag', '#')}}
+            </div>
+
+            {% if title %}
+                <h2 class="block-title">
+                    {{ title }}
+                </h2>
+            {% endif %}
+
+            <div class="image-combo__description">
+                {{ description }}
+            </div>
+
+            {% block cta %}
+                {% include '/partial/primary-buttons.twig' with {
+                    text : 'Read more',
+                    type: 'secondary',
+                    target: '',
+                    href: url,
+                    title: title,
+                } %}
+            {% endblock %}
+        {% endblock %}
+        </div>
+    </div>
+</div>

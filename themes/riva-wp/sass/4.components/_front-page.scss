@@ -1,0 +1,28 @@
+body.home {
+  background-color: $invert;
+
+  .three-columns-cta__heading h2 {
+  	max-width: 780px;
+  	width: 100%;
+  	margin-right: auto;
+  	margin-left: auto;
+  }
+}
+
+/** WAVES ANIMATION **/
+@keyframes Flex {
+	0% {
+	  transform: skew(20deg, 0deg) scale3d(1.2, 1, 1);
+	}
+	100% {
+	  transform: skew(0deg, 0deg) scale3d(2, 1, 1);
+	}
+}
+  
+.wave {
+	animation-name: Flex;
+	animation-duration: 10s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: linear;
+}
