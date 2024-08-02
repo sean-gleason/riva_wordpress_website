@@ -1,0 +1,50 @@
+asg
+version: "3"
+services:
+  riva-wordpress:
+    container_name: riva-wp
+    depends_on:
+    - riva-mysql
+    image: wordpress
+    restart: always
+    ports:
+    - "8000:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql_container
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+      - ./wp-config/wp-config.php:/var/www/html/wp-config.php
+    networks:
+      - wpsite
+  riva-mysql:
+    container_name: riva_mysql
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - wpsite
+  phpmyadmin:
+    depends_on:
+      - riva-mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: mysql_db
+      PMA_USER: wordpress
+      PMA_PASSWORD: wordpress
+      UPLOAD_LIMIT: 900M
+    networks:
+      - wpsite
+networks:
+  wpsite:
