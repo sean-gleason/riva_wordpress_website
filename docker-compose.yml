@@ -1,4 +1,3 @@
-asg
 version: "3"
 services:
   riva-wordpress:
