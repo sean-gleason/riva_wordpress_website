@@ -1,0 +1,28 @@
+<div class='news-featured__card'>
+    <div class='news-featured__image'>
+        {# Placeholder for image #}
+        <img src='{{ thumbnail }}' />
+    </div>
+    <div class='news-featured__content'>
+
+        {# import buttons #}
+        {% import '/partial/macros/buttons.twig' as button %}
+
+        <div class='news-featured__tags'>
+            {{ button.tagButton('tag', '#')}}
+        </div>
+        <div class='news-featured__title'>
+            <h3>{{ title }}</h3>
+        </div>
+        <div class='news-featured__description'>
+            {{ description }}
+        </div>
+        {% include '/partial/primary-buttons.twig' with {
+            text : 'Read more',
+            type: 'secondary',
+            target: '',
+            href: url,
+            title: title
+        } %}
+    </div>
+</div>

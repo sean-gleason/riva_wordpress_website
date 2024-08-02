@@ -1,0 +1,25 @@
+
+
+<div class='cta-card {% if layout %} {{layout}}-item {% else %} no_background-item {% endif %}'>
+    {% if layout != 'no-background' and backgroundImage %}
+        <div class='cta-card__image-background '>
+            <img src='{{ backgroundImage}}' />
+        </div>
+    {% endif %}
+    <div class='cta-card__title'>
+        <h2 class='accent accent-centered'>{{ title }}</h2>
+    </div>
+    <div class='cta-card__description'>
+        <p>{{ description }}</p>
+    </div>
+    <div class='cta-card__link'>
+        {% include '/partial/primary-buttons.twig' with {
+            text : linkText,
+            type: 'primary',
+            target: '',
+            href: url,
+            title: title,
+            darkMode: darkMode
+        } %}
+    </div>
+</div>

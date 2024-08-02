@@ -1,0 +1,162 @@
+/** THREE COLUMNS CTA **/
+.three-columns-cta {
+  overflow: hidden;
+  padding-top: 5rem;
+
+  &__heading {
+    background: $color--white;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      background-image: url('/wp-content/themes/riva-wp/images/bg-waves-three-columns-cta.svg');
+      background-repeat: no-repeat;
+      background-size: 110% 100%;
+      background-position-x: center;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 140%;
+      z-index: 0;
+      animation-name: Flex;
+      animation-duration: 10s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: linear;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: $font-kumbh-sans;
+      font-size: 50px;
+      font-weight: 600;
+      line-height: 55px;
+      letter-spacing: -1px;
+      color: $color--gray-dark;
+      margin-top: 0;
+      margin-bottom: 166px;
+      position: relative;
+      z-index: 1;
+    }
+
+
+  }
+
+  &__icons {
+    background: $color--gray-dark;
+    z-index: 1;
+
+    .icons-heading {
+      font-family: $font-kumbh-sans;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.8px;
+      color: $color--white;
+      margin-top: 40px;
+    }
+
+    .icons-subheading {
+      font-family: $font-kumbh-sans;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.8px;
+      color: $color--white;
+      margin-top: 0;
+    }
+
+    .icon-title {
+      font-family: $font-kumbh-sans;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: $color--white;
+    }
+
+    .icons-description {
+      font-family: $font-kumbh-sans;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.4px;
+      color: $color--white;
+      margin-top: 20px;
+      margin-bottom: 73px;
+    }
+
+    img {
+      width: auto;
+      margin-bottom: 30px;
+    }
+
+    .row {
+      a {
+        .image-wrapper {
+          position: relative;
+          display: inline-block;
+
+          &::after {
+            content: "";
+            position: absolute; 
+            top: 10px;
+            left: 10px;
+            width: 226px;
+            height: 226px;
+            z-index: 0;
+            background-image: url('/wp-content/themes/riva-wp/images/half-circle-three-columns.png');
+            background-repeat: no-repeat;
+            background-size: 85%;
+            transition: opacity 200ms ease-in-out;
+            opacity: 0;
+          }
+
+          img {
+            position: relative;
+            z-index: 1;
+            width: 150px;
+            height: 150px;
+          }
+      
+        }
+      
+        &:hover {
+          .image-wrapper {
+            &::after {
+              opacity: 1;
+            }
+          }
+
+          + h3 {
+            text-decoration: underline;
+          }
+        }
+      }
+
+     
+    }
+
+    .container {
+      max-width: 1190px !important;
+    }
+  }
+
+  .btn {
+    @include button--rounded--orange--arrow();
+
+    margin-top: 23px;
+    margin-bottom: 100px;
+
+  }
+}
+
+// Pause wave motion.
+body.motions-paused {
+  .three-columns-cta {
+    &__heading {
+      &::after {
+        animation-name: none;
+        transform: skew(0deg, 0deg) scale3d(2, 1, 1);
+      }
+    }
+  }
+}

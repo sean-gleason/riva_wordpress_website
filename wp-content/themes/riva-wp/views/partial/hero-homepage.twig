@@ -1,0 +1,50 @@
+{#
+/**
+* Partial: Homepage Hero
+*/
+#}
+{% if hero_block.headline %}
+	{% set hero_title = hero_block.headline %}
+{% else %}
+	{% set hero_title = post.title %}
+{% endif %}
+
+{% block homepage_hero_block %}
+	<div class="container-fluid p-0">
+		<div class="hero homepage {{ home_hero_class }}" style="background-image: url('{{ hero_block.background_image.url }}');">
+			<div class="hero__inner container">
+
+				<div class="hero__caption">
+
+			{% block breadcrumbs %}
+				{% if breadcrumbs %}
+					<div class="row">
+						<div class="col-12 pt-2 text-left">
+							<div class="breadcrumbs">{{ breadcrumbs }}</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endblock %}
+
+					<div class="hero__content">
+						<h1 class="display-4 text-white mb-3 col-12 col-lg-9 col-xl-12">{{ hero_title }}</h1>
+						<p class="text-white mb-5 col-12 col-lg-9 col-xl-7">{{ hero_block.content }}</p>
+						{% if hero_block.cta_button and '' != hero_block.cta_button.cta_link %}
+
+							<a class="btn btn-primary rounded-pill" href="{{ hero_block.cta_button.cta_link.url }}" title="{{ hero_block.cta_button.cta_link.title }}" target="{% if hero_block.cta_button.cta_link.target %}{{ hero_block.cta_button.cta_link.target }}{% else %}_self{% endif %}">
+								<span class="button-text">
+									{% if hero_block.cta_button.cta_text %}
+										{{ hero_block.cta_button.cta_text }}
+									{% else %}
+										{{ hero_block.cta_button.cta_link.title }}
+									{% endif %}
+								</span>
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			{% include 'partial/hero-bottom.twig' %}
+		</div>
+	</div>
+{% endblock %}

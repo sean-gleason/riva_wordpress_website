@@ -1,0 +1,93 @@
+{#
+/**
+ * Block Name: Three Columns CTA Block
+ *
+ * This is the template that displays the Tab block.
+ *
+ * Variables:
+ * - content
+ *  - tab_title
+ *  - tab_items (repeater)
+ *    - heading
+ *    - column_text  (description field)
+ *    - column_image
+ *    - cta_button
+ *      - cta_link
+ *      - cta_text
+ * - block
+ *  - id
+ * - is_preview
+ */
+#}
+{# Process Fields #}
+
+{# Build Attributes #}
+{% set id = 'three-columns-cta-id--' ~ block.id %}
+{% set classes = 'three-columns-cta' %}
+
+<!-- THREE COLUMNS CTA -->
+{% block tabs %}
+<div class="{{ classes }} {% if block.className %} {{ block.className }}{% endif %}" id="{{ id }}">
+	{% if content.heading_with_white_background  %}
+	<div class="three-columns-cta__heading top-space">
+		<div class="container px-lg-5 pt-5">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2>{{ content.heading_with_white_background }}</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	<div class="three-columns-cta__icons">
+		<div class="container px-lg-5 pt-5">
+			<div class="row">
+				<div class="col-12 mt-4 text-center">
+					<h2 class="icons-heading">{{ content.heading }}</h2>
+					<h3 class="icons-subheading">{{ content.subheading }}</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center">
+					<h3 class="icons-description">{{ content.description }}</h3>
+				</div>
+			</div>
+			<div class="row pb-3">
+				{% for icon in content.icons %}
+				<div class="col-12 col-md-6 col-lg-4 mt-4 mb-5">
+					<div class="row text-center">
+						{% if icon.icon_link is not empty %}
+							<a href="{{ icon.icon_link.url }}">
+								<div class="image-wrapper">
+									<img class="mx-auto d-block" src="{{ icon.image.url }}" alt="{{ icon.image.alt }}" />
+								</div>
+							</a>
+						{% else %}
+							<img class="mx-auto d-block" src="{{ icon.image.url }}" alt="{{ icon.image.alt }}" />
+						{% endif %}
+						<h3 class="icon-title">{{ icon.title }}</h3>
+						{% if content.description  %}
+							<p class="riva-h5 icon-description">{{ icon.description }}</p>
+						{% endif %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% if content.cta.cta_link.url is not empty %}
+				<div class="row">
+					<div class="col-12 text-center">
+						<a class="btn btn-primary rounded-pill" href="{{ content.cta.cta_link.url }}" title="{{ content.cta.cta_link.title }}" target="{% if content.cta.cta_link.target %}{{ content.cta.cta_link.target }}{% else %}_self{% endif %}">
+							{{ content.cta.cta_link.title }}
+							{% if content.cta.cta_text %}
+								{{ content.cta.cta_text }}
+							{% else %}
+								{{ content.cta.cta_link.title }}
+							{% endif %}
+						</a>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

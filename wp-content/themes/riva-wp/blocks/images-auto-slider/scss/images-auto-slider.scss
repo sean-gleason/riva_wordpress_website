@@ -1,0 +1,121 @@
+/** Image Auto Slider **/
+.image-auto-slider {
+  padding-top: 30px;
+  padding-bottom: 20px;
+  padding-left: 0;
+  padding-right: 0;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    padding-top: 38px;
+    padding-bottom: 68px;
+  }
+
+  h2 {
+    font-family: $font-kumbh-sans;
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 55px;
+    letter-spacing: 2.1px;
+    color: $color--gray-dark;
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      margin-top: 0;
+    }
+  }
+
+  p {
+    font-family: $font-kumbh-sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.4px;
+    color: $color--gray-dark;
+    margin-top: 18px;
+  }
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    gap: 63px;
+    margin-top: 85px;
+    padding-left: 0;
+  }
+
+  .btn {
+    @include button--rounded--orange--arrow();
+    margin-top: 100px;
+    margin-bottom: 25px;
+  }
+
+  .slick-autoplay-toggle-button {
+    position: absolute;
+    left: 10px;
+    bottom: -35px;
+    z-index: 10;
+    opacity: .75;
+    background: 0 0;
+    border: 0;
+    cursor: pointer;
+
+    @media screen and (max-width: $breakpoint-tablet) {
+      bottom: -60px;
+    }
+  }
+
+  .slick-play-icon,
+  .slick-pause-icon {
+    &::before {
+      width: 40px;
+      height: 40px;
+      font-family: slick;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 40px;
+      text-align: center;
+      padding: 6px 6px 6px 8px;
+      background: linear-gradient(135deg, #f49a25, #d1372b 30%, #d1372b);
+      border-radius: 50px;
+      color: #fff;
+    }
+
+    &:hover::before {
+      box-shadow: 0 0 0 2px $blue;
+    }
+  }
+
+  .slick-pause-icon {
+    &::before {
+      content: '⏸';
+    }
+  }
+
+  .slick-play-icon {
+    &::before {
+      content: '▶';
+    }
+  }
+
+  .slick-sr-only {
+    @include visually-hidden;
+  }
+
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .text-center {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .slick-list {
+    width: 100%;
+    padding: 0 !important;
+
+    .slick-slide {
+      margin-right: 30px;
+    }
+  }
+}

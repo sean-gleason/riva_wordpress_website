@@ -1,0 +1,215 @@
+{#
+/**
+ * Module: Hero
+ *
+ * Variables:
+ * - content
+ *  - layout (select dropdown)
+ *    - basic_hero
+ *    - large_hero
+ *    - media_right_hero_image
+ *    - media_right_hero_video
+ *    - subnav_right_hero
+ *    - spotlight_hero
+ *  - headline - text field (overrides post.title, if present)
+ *  - headline_b (repeater - requires layout: spotlight_hero)
+ *    - headline_item - text field (for the animated text on the spotlight)
+ *  - content - text field (subheading)
+ *  - background_image
+ *  - cta_button (group - requires layout: spotlight_hero)
+ *    - cta_link
+ *    - cta_text
+ *  - spotlight_video (oembed - requires layout: spotlight_hero)
+ *  - media_image (image - requires layout: media_right_hero_image)
+ *  - media_video (oembed - requires layout: media_right_hero_video)
+ *  - sub_menu (group - requires layout: subnav_right_hero)
+ *    - menu_title (text)
+ *    - menu (repeater)
+ *      - cta_button (clone of group)
+ *        - cta_link
+ *        - cta_text
+ * - block
+ *  - id
+ *  - className
+ * - is_preview
+*/
+#}
+{% set classes = ' hero-block ' %}
+
+{% if hero_block.headline and '' != hero_block.headline %}
+	{% set hero_title = hero_block.headline %}
+{% else %}
+	{% set hero_title = post.title %}
+{% endif %}
+
+{# Hero Block #}
+{% block hero_area_block %}
+
+	<section class="{{ classes }} {{ hero_block.layout }}{% if block.className %} {{ block.className }}{% endif %}" id="{{ block.id }}">
+		<div class="hero-block__inner-wrapper l-container">
+			{# Attach Background Image, converted to WebP #}
+			{% if hero_block.background_image and '' != hero_block.background_image %}
+				{% include 'modules/hero-area-styles.twig' with { 'image' : hero_block.background_image } %}
+			{% endif %}
+
+			{# Load Breadcrumbs, which is not available for the Centered Text Hero #}
+							{% if 'spotlight_hero' != hero_block.layout %}
+								{% block breadcrumbs %}
+									{% if breadcrumbs %}
+										<div class="breadcrumbs">{{ breadcrumbs }}</div>
+									{% endif %}
+								{% endblock %}
+							{% endif %}
+			<div class='hero-block__columns'>
+				<div class="hero-block__left-column">
+					{# Hero Block 'Headline' and 'Content (Subheading)' #}
+					{% if hero_block.headline or hero_block.content or breadcrumbs %}
+						<div class="hero-block__heading-wrapper">
+							<div class="hero-block__heading-inner">
+
+
+								{# Heading #}
+								<h1 class="hero-block__heading">{{ hero_title }}</h2>
+
+								{# Subheading #}
+								{% if hero_block.spotlight_video and 'spotlight_hero' == hero_block.layout %}
+									<div id="typed-strings">
+										{% for item in hero_block.headline_b %}
+											<p>{{ item.headline_item }}</p>
+										{% endfor %}
+									</div>
+									<span id="typed"></span>
+								{% else %}
+								{% if hero_block.content %}
+									<p class="hero-block__subheading" role="doc-subtitle">{{ hero_block.content }}</p>
+								{% endif %}
+
+								{% endif %}
+
+							</div>
+						</div>
+					{% endif %}
+
+					{# Load the 'Single' CTA, if present. (Not available for 'Basic Hero' or 'Large Hero') #}
+					{% if hero_block.layout != basic_hero and hero_block.layout != large_hero %}
+						{% if hero_block.cta_button and '' != hero_block.cta_button.cta_link %}
+							<div class="hero-block__cta">
+								{% set hero_cta = hero_block.cta_button %}
+								{% include '/partial/primary-buttons.twig' with {
+									text : hero_cta.cta_link.title,
+									type: 'primary',
+									target: '_parent',
+									href: hero_cta.cta_link.url,
+									title: hero_cta.cta_link.title,
+									darkMode: true
+								} %}
+
+							</div>
+						{% endif %}
+					{% endif %}
+
+
+				</div>{# END: Hero - left-column #}
+
+				{% if 'basic_hero' != hero_block.layout and 'large_hero' != hero_block.layout %}
+				<div class="hero-block__right-column">
+					{# Media Right Hero - Image #}
+					{% if hero_block.media_image and 'media_right_hero_image' == hero_block.layout %}
+						{% set image = Image(hero_block.media_image) %}
+						<img src="{{ image.src }}" class="hero-block__img" alt="{{ image.alt }}" />
+					{% endif %}
+
+					{# Media Right Hero - Video #}
+					{% if hero_block.media_video and 'media_right_hero_video' == hero_block.layout %}
+						<figure class="hero-right__video">
+							<div class="wp-block-embed__wrapper">
+								{{ hero_block.media_video }}
+							</div>
+						</figure>
+					{% endif %}
+
+					{# Spotlight Video #}
+					{# TODO: Rewrite as needed to theme video #}
+					{% if hero_block.spotlight_video and 'spotlight_hero' == hero_block.layout %}
+						{% set videoSrc = hero_block.spotlight_video|split("src=") %}
+						{% set videoUrl = videoSrc[1]|split('"') %}
+
+						<div class='YT-background' data-ytbg-mobile='true' data-ytbg-play-button="true" data-vbg='{{ videoUrl[1] }}' ></div>
+
+					{% endif %}
+
+					{# SubNav Right Hero #}
+					{% if hero_block.sub_menu and 'subnav_right_hero' == hero_block.layout %}
+						{% set sub_menu = hero_block.sub_menu %}
+						<div class="hero-block__subnav-wrapper">
+							{% if sub_menu.menu_title %}
+								<h4 class="hero-block__subnav-heading">{{ sub_menu.menu_title }}</h4>
+							{% else %}
+								<h4>Our Expertise</h4>
+							{% endif %}
+							{% if sub_menu.menu %}
+								<ul class="hero-block__subnav-menu">
+									{% for menu_item in sub_menu.menu %}
+										<li class="hero-block__subnav-menu--item">
+											{% include 'partial/cta-link-single.twig' with { "cta_link": menu_item.cta, "cta_class": "" } %}
+										</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					{% endif %}
+
+				</div>
+			{% endif %} {# END: Hero - right-column #}
+			</div>
+			<div class='hero__scroll-pause'>
+				<span>SCROLL</span>
+				<div class='hero__scroll'>
+					<div class='hero__scroll-icon'>
+						<span class='hero__dot'></span>
+						<span class='hero__dot'></span>
+						<span class='hero__dot'></span>
+					</div>
+				</div>
+
+				{% if hero_block.spotlight_video and 'spotlight_hero' == hero_block.layout %}
+					<div class='hero__pause-video'>
+						<span>PAUSE MOTION</span>
+						<button type="button" id="toggle" role="switch" aria-checked="true">
+							<span aria-label='on'></span><span area-label='off'></span>
+						</button>
+					</div>
+				{% endif %}
+			</div>
+
+
+		</div>{# END: Hero - Inner Wrapper #}
+	</section>
+
+	{# Social Sharing #}
+	{% if hero_block.layout and 'spotlight_hero' != hero_block.layout %}
+		{% block social_share %}
+		<div class="social-share">
+			{# Accounts to Share #}
+			{% set share_accounts = ['facebook', 'twitter', 'linkedin', 'email'] %}
+
+			<h3 class="">Share:</h3>
+			{# <ul class="social-share__share-links">
+				{% import '/partial/macros/icons.twig' as icon %}
+				{% for account in share_accounts %}
+					<li class="social-share__share-link"> #}
+						{# {% if account != 'email' %}
+							{{ icon.icon(account)}}
+						{% endif %}
+						{% if account == 'email' %}
+							{{ icon.icon(account)}}
+						{% endif %} #}
+						{# {% include 'partial/social-share.twig' with { "social_account": account } %}
+					</li>
+				{% endfor %} #}
+			</ul>
+		</div>
+		{% endblock %}
+	{% endif %}
+
+{% endblock %}

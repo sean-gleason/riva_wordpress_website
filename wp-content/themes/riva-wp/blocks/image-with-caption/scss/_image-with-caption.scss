@@ -1,0 +1,61 @@
+.module--image-with-caption--image {
+    position: relative;
+    
+    .caption {
+        background: $color--gray-light;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+        padding: 24px 30px;
+        text-align: left;
+
+        span {
+            color: $color--gray-dark;
+            font-size: 14px;
+            line-height: 22px;
+            letter-spacing: 0.35px;
+            
+        }
+    }
+
+    .zoom-in {
+        content: "";   
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        left: 50%;
+        margin: 0;
+
+        .btn {
+            display: none;
+            background: $color--gray-dark;
+            border-radius: 25px;
+            opacity: 0.8;
+            padding: 20px 47px 20px 16px;
+            cursor: pointer;
+            width: 170px;
+
+            span {
+                color: $color--white;
+                position: relative;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: -32px;
+                    background-image: url('/wp-content/themes/riva-wp/images/icons/icon-zoom-in.png');
+                    background-repeat: no-repeat;
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+        }
+
+    }
+
+    &:hover {
+        .btn {
+            display: flex;
+        }
+    }
+}

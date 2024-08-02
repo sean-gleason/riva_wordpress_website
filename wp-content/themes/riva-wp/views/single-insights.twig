@@ -1,0 +1,88 @@
+{% extends "base.twig" %}
+{% set download_file = post.meta('download_file') %}
+
+{% block content %}
+	<div class="single-insight-content">
+		{{ post.content }}
+
+		<div class="container">
+			<div class="row"> 
+				<div class="col-12 single-insight-content__footer-tags">
+					<ul>
+						{% for tag in insight_types %}
+							<li><a href="/insight-type/{{ tag.slug }}/" class="tag">{{ tag.name }}</a></li>
+						{% endfor %}
+					</ul>
+					{% include 'partial/social-share.twig' %}
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row single-insight-content__navigation-buttons text-center">
+				<div class="col-12">
+					{% if previous_post %}
+						<a class="btn btn-primary rounded-pill" href="{{ previous_post }}">Previous Article</a>
+					{% endif %}
+					{% if next_post %}
+						<a class="btn btn-primary rounded-pill" href="{{ next_post }}">Next Article</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+		{% if download_file %}
+		<div class="single-insight-content__download-cta" style="background-image: url('/wp-content/themes/riva-wp/images/bg-download-this-article.jpg');">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h2>Download PDF</h2>
+						<p>Complete the form below to download</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 text-center">
+						{% include 'partial/download-article-button.twig' with { "gf_form_id": '3' } %}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="single-insight-content__related-article">
+			<div class="container">
+				<div class="header d-flex flex-column flex-md-row justify-content-between mb-3 mb-mb-5">
+					<div class="">
+						<h2>Related Articles</h2>
+					</div>
+					<div class="align-self-stretch d-flex">
+						<a class="btn btn-primary rounded-pill align-self-center" href="/insights">View More<span class="visually-hidden"> Related Articles</span></a>
+					</div>
+				</div>
+				<div class="d-flex flex-row flex-wrap gap-3 justify-content-between related-posts">
+					{% for related in related_posts %}
+						{% set listing_image = related.meta('listing_image') %}
+						{% set author = related.meta('author') %}
+						{% set insight_types = related.terms('insight-type') %}
+						{% if insight_types|length > 0 %}
+							{% set tag = insight_types[0].name %}
+						{% else %}
+							{% set tag = '' %}
+						{% endif %}
+						{% include 'card.twig' with { 
+								card_image: listing_image.sizes.medium,
+								is_featured: related.is_featured,
+								card_tag: tag,
+								card_tag_link: '',
+								card_link: related.link,
+								card_title: related.post_title,
+								card_excerpt: related.excerpt,
+								card_author: author,
+								card_date: related.insight_date
+							} 
+						%}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

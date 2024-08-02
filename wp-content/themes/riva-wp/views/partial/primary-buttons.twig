@@ -1,0 +1,14 @@
+{% set type = type ? type : 'primary' %}
+{% set color = color ? color : 'orange' %}
+{% set darkMode = darkMode ? darkMode : false %}
+{% set icon = icon ? icon : 'east' %}
+{% set text = text ? text : 'Text' %}
+{% set href = href ? href : '#' %}
+{% set target =  target ? target  : '_blank' %}
+{% set title = title ? title : tex %}
+
+{% import '/partial/macros/icons.twig' as gicon %}
+<a href={{href}} title={{ title }} target={{ target }} class='button button__{{type}} {% if type == 'primary' %} button__{{type}}--{{ color }} {% endif %} button__mode--{{ darkMode ? 'dark' : 'light' }}'>
+	<span class='button-text'>{{ text }} </span>
+	{{ gicon.gIcon('east') }}
+</a>

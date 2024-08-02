@@ -1,0 +1,36 @@
+{# Footer Navigation #}
+{% if footer_navigation %}
+	{% set parent_menu = 'footer' %}
+	{% set cta_block = options.footer_settings.other_fields %}
+
+	<nav id="footer-menu" role="navigation" class="menu-footer-menu-container">
+		<ul id="menu-footer-menu" class="menu-footer-navigation">
+			{% for nav_item in nav_items %}
+				<li id="footer-menu-item-{{ nav_item.id }}" class="nav-footer-item {{ nav_item.classes|join(' ') }}">
+					<a class="nav-footer-link" href="{{ nav_item.link }}" target="{{ nav_item.target }}" {% if nav_item.children %}id="navbar-{{ parent_menu }}-Dropdown-{{ nav_item.id }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %}>{{ nav_item.title }}</a>
+					{% if nav_item.children %}
+						{% include 'partial/menu-children.twig' with { "children": nav_item.children, "parent_menu": parent_menu } %}
+					{% endif %}
+				</li>
+			{% endfor %}
+			{# Add CTA Content Block #}
+			{% if cta_block %}
+				<li id="footer-menu-cta-block" class="nav-footer-item">
+					{% if cta_block.cta_link_single %}
+						{% set link_item = cta_block.cta_link_single  %}
+
+						<a class="button-primary-gradient-large" href="{{ link_item.link.url }}" target="{% if link_item.link.target %}{{ link_item.link.target }}{% else %}_self{% endif %}">
+							{% if link_item.link_text %}
+								{{ link_item.link_text }}
+							{% else %}
+								{{ link_item.link.title }}
+							{% endif %}
+						</a>
+					{% endif %}
+					<h3 class="paragraph-sm-bold">Need Technical Support?</h3>
+					<a class="tech-support" target="_blank" href="mailto:{{ cta_block.tech_support_email }}">{{ cta_block.tech_support_email }}</a>
+				</li>
+			{% endif %}
+		</ul>
+	</nav>
+{% endif %}

@@ -1,0 +1,49 @@
+{% macro button(type = 'primary', color = 'orange', darkMode = false, icon = 'east', text = 'Text', href = '#', target = '_blank' ) %}
+    {% import '/partial/macros/icons.twig' as gicon %}
+    <a href={{href}} target={{ target }} class='button button__{{type}} {% if type == 'primary' %} button__{{type}}--{{ color }} {% endif %} button__mode--{{ darkMode ? 'dark' : 'light' }}'>
+        <span class='button-text'>{{ text }} </span>
+        {{ gicon.gIcon('east') }}
+    </a>
+{% endmacro %}
+
+{% macro ctaLink(type = 'primary', color = 'orange', darkMode = false, icon = 'east', text = 'Text', link = '#') %}
+    {% import '/partial/macros/icons.twig' as gicon %}
+    <a href='{{ link }}' class='button button__{{type}} {% if type == 'primary' %} button__{{type}}--{{ color }} {% endif %} button__mode--{{ darkMode ? 'dark' : 'light' }}'>
+        <span class='button-text'>{{ text }}</span>
+        {{ gicon.gIcon('east') }}
+    </a>
+{% endmacro %}
+
+{% macro expandButton(text = 'Expand all', id = '' ) %}
+    {% import '/partial/macros/icons.twig' as gicon %}
+    <button type="button" class='expand-button'>
+        <span class='button-text'>{{ text }}</span>
+        {{ gicon.gIcon('add') }}
+    </button>
+{% endmacro %}
+
+{% macro tagButton(text = 'Tag text', link = '#', icon = false ) %}
+    {% import '/partial/macros/icons.twig' as gicon %}
+    <a href='{{ link }}' class='tag-button'>
+        <span class='button-text'>{{ text }}</span>
+        {% if icon %}
+            {{ gicon.gIcon('close') }}
+        {% endif %}
+    </a>
+{% endmacro %}
+
+{% macro clearButton(text = 'Clear all', link = '#' ) %}
+    {% import '/partial/macros/icons.twig' as gicon %}
+    <a href='{{ link }}' class='clear-button'>
+        <span class='button-text'>{{ text }}</span>
+        {{ gicon.gIcon('close') }}
+    </a>
+{% endmacro %}
+
+{% macro expandedArrow( link = '#' ) %}
+    {% import '/partial/macros/icons.twig' as gicon %}
+    <a href='{{ link }}' class='expanded-arrow'>
+        {{ gicon.gIcon('remove') }}
+        {{ gicon.gIcon('east') }}
+    </a>
+{% endmacro %}

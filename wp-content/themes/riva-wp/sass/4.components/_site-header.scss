@@ -1,0 +1,23 @@
+#header {
+  background: $red;
+}
+
+#header-inner {
+  margin-bottom: $spacing--vertical;
+  padding: 0 $spacing--horizontal;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.header-logo {
+  display: block;
+  width: 85px;
+
+  svg {
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+}

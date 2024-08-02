@@ -1,5 +1,3 @@
-*
-!plugins/
-!themes/
-!wp-content/
+mysql/*
+wp-config/*
 !docker-compose.yml

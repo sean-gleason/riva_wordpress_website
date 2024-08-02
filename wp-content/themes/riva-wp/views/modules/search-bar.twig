@@ -1,0 +1,25 @@
+{#
+/**
+* Module: Search Bar
+*
+*/
+#}
+{% set classes = 'l-container search-bar' %}
+<div class="{{ classes }}" id="search-bar">
+	<div class="search-bar__inner-wrapper">
+
+		<img class="search-bar__search-icon" src="{{ theme.link }}/images/icon_search.svg"/>
+		<form method="get" action="/">
+			<input name="s" class="search-bar__criteria-field" type="text" placeholder="What are you looking for? Hit enter to search.">
+		</form>
+
+	</div>
+
+	{# Close Button #}
+	<div class="search-bar__close-btn-wrapper">
+		<button id="search-bar__close-btn" class="search-bar__close-btn">
+			{% include 'partial/svg-icon.twig' with { "icon_name": "close-icon" } %}
+			<span class="visually-hidden-focusable">Close</span>
+		</button>
+	</div>
+</div>

@@ -1,0 +1,80 @@
+{% set footer_email = options.footer_settings.footer_email %}
+{% set footer_telephone = options.footer_settings.footer_telephone %}
+{% set footer_address = options.footer_settings.footer_address %}
+{% set footer_logo = options.footer_settings.footer_logo %}
+{% set social_media = options.footer_settings.social_media %}
+<footer class="container-fluid text-lg-start">
+	<section class="footer-navigation container">
+		<div class="row">
+			<div class="col-12 col-lg-2">
+				{% if (options.logos and options.logos.footer_logo) %}
+					<img src="{{ options.logos.footer_logo.url|resize(null, 67) }}" alt="RIVA company logo" class="logo-footer">
+				{% else %}
+					<img src="/wp-content/themes/riva-wp/images/logo.png" alt="RIVA company logo"  class="logo-footer">
+				{% endif %}
+				<ul class="contact-info">
+					<li class="email"><a href="mailto:{{ footer_email }}">{{ footer_email }}</a></li>
+					<li class="telephone"><a href="tel:1{{ footer_telephone }}">{{ footer_telephone }}</a></li>
+					<li class="location">{{ footer_address|nl2br }}
+					</li>
+				</ul>
+				<ul class="social-networks">
+					{% for social in social_media %}
+						<li class="social-networks__link">
+							<a href="{{ social.link }}" title="{{ social.icon }}" target="_blank">
+								<img src="/wp-content/themes/riva-wp/images/icons/icon-{{ social.icon ~ '.svg' }}" alt="{{ social.icon|capitalize }} Icon">
+								<span class="visually-hidden">Visit us on {{ social.icon|capitalize }}!</span>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-12 col-lg-10 footer-links">
+				{% if footer_navigation %}
+					<h2 class="visually-hidden">Footer Menu</h2>
+					{% set nav_items = footer_navigation.get_items %}
+					{% for nav_item in nav_items %}
+						<div class="footer-links__group">
+							<h3><a href="{{ nav_item.link }}">{{ nav_item.title }}</a></h3>
+							{% if nav_item.children %}
+								<ul>
+									{% for child_item in nav_item.children %}
+										<li><a href="{{ child_item.link }}" target="{{ child_item.target }}">{{ child_item.title }}</a></li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</section>
+	<section class="copyright container">
+		<div class="row d-flex align-items-center">
+			<div class="col-12 d-sm-flex d-md-none d-lg-none d-flex justify-content-center">
+				<img src="/wp-content/themes/riva-wp/images/AlpacaBounce.gif" class="alpaca-bounce"  role="presentation" />
+			</div>
+			<div class="col-12 col-lg-4 text-start">
+
+			</div>
+			<div class="col-lg-4 d-sm-none d-lg-flex d-md-flex d-flex justify-content-center">
+				<img src="/wp-content/themes/riva-wp/images/AlpacaBounce.gif" class="alpaca-bounce" role="presentation" />
+			</div>
+			<div class="col-12 col-lg-4 text-end">
+				<div class="tagline-container">
+					<span>RIVA Solutions, Inc. © {{ "now"|date("Y") }}. All rights reserved.</span>
+					<div class="tagline">
+						<p>Results.</p>
+						<p>Innovation.</p>
+						<p>Values.</p>
+						<p>Accountability.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+</footer>
+<!-- Footer -->
+
+{{ function('wp_footer') }}

@@ -1,0 +1,286 @@
+/**
+ * --------
+ * SETTINGS
+ * ALL global variables should be collected here.
+ *
+ * 1. WIDTHS
+ *    1.A Common breakpoints
+ *    1.B Semantic widths
+ * 2. FONTS
+ *    2.A Imported fonts
+ *    2.B Basic Font Stacks
+ *    2.C Imported Families Variables
+ * 3. COLORS
+ *    3.A Raw colors
+ *    3.B Semantic colors
+ * 4. LAYOUT & MISC
+ *
+ * @TODO Update for Bootstrap Variables.
+ * @see node_modules/bootstrap/scss/_variables.scss.
+ */
+
+/**
+ * Bootstrap overrides
+ * ----------
+ * Copy variables from `_variables.scss` to this file to override default values
+ * without modifying source files.
+ */
+$grid-breakpoints: (xs: 0,
+  sm: 650px,
+  md: 800px,
+  lg: 1100px,
+  xl: 1400px,
+  xxl: 1920px);
+
+$container-max-widths: (sm: 650px,
+  md: 800px,
+  lg: 1100px,
+  xl: 1400px,
+  xxl: 1920px);
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+$grid-columns: 12 !default;
+$grid-gutter-width: 1.5rem !default;
+$grid-row-columns: 6 !default;
+
+/**
+ * ---------
+ * 1. WIDTHS
+ *
+ * 1.A Common breakpoints ----------
+ */
+$width--xs: 350px;
+/* small phone breakpoing (iPhone 5, etc.) */
+$width--s: 650px;
+/* general phone breakpoint */
+$width--m: 800px;
+/* general tablet portrait breakpoint */
+$width--l: 1100px;
+/* general tablet landscape breakpoint */
+$width--xl: 1400px;
+/* general max container width */
+$width--max: 1920px;
+/* general design max */
+
+/**
+* 1.B Semantic/Design Specific widths ----------
+* assume any "content" widths will
+* also get horizontal padding/gutters.
+*
+*/
+
+/**
+* @include mobile() relies on this value.
+* If you change this, change the value for `const mobileBreakpoint`
+* in `js/components/header.js` as well.
+*/
+$mobile: $width--l;
+$breakpoint-mobile: $width--s;
+$breakpoint-tablet: $width--m;
+$breakpoint-large: $width--l;
+
+/**
+* --------
+* 2. FONTS
+*
+* 2.A Imported fonts ----------
+
+  ! example - uncomment to use it or delete it:
+
+    @font-face {
+      font-family: "Custom Family Name";
+      src: url('../fonts/path-to-font.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+    }
+*/
+
+/**
+* 2.B Basic Font Stacks ----------
+*/
+// // Bootstrap Overrides
+$font-family-sans-serif: 'Kumbh Sans',
+sans-serif;
+
+// Theme Variables
+
+$font-kumbh-sans: 'Kumbh Sans',
+sans-serif;
+
+/**
+* 2.C Imported Families Variables ----------
+* include imported family variables here, along with a sans/serif fallback
+
+  ! example - uncomment to use it or delete it:
+
+    $font--custom-family-name: "Custom Family Name", $font--sans;
+*/
+
+/**
+* 2.D  Semantic Fonts ----------
+* if you're using imported families, use family variables
+*/
+// $font-family-sans-serif
+$font--body: $font-kumbh-sans;
+$font--heading: $font-kumbh-sans;
+$font--button: $font-kumbh-sans;
+
+/**
+* 2.E  Bootstrap Typography --------
+* Overrides, as needed.
+*/
+$base-font-size: 1rem;
+$body-font-size: 18px;
+
+// $font-size-root:              null;
+$font-size-base: $base-font-size; // Assumes the browser default, typically `16px`
+// $font-size-sm:                $font-size-base * .875;
+// $font-size-lg:                $font-size-base * 1.25;
+
+// $font-weight-lighter:         lighter;
+// $font-weight-light:           300;
+// $font-weight-normal:          400;
+// $font-weight-semibold:        600;
+// $font-weight-bold:            700;
+// $font-weight-bolder:          bolder;
+
+// $font-weight-base:            $font-weight-normal;
+
+// $line-height-base:            1.5;
+// $line-height-sm:              1.25;
+// $line-height-lg:              2;
+
+/**
+ * Heading Customizations
+ */
+// $h1-font-size:                $font-size-base * 2.5;
+// $h2-font-size:                $font-size-base * 2;
+// $h3-font-size:                $font-size-base * 1.75;
+// $h4-font-size:                $font-size-base * 1.5;
+// $h5-font-size:                $font-size-base * 1.25;
+// $h6-font-size:                $font-size-base;
+
+// $headings-margin-bottom:      $spacer * .5;
+// $headings-font-family:        null;
+// $headings-font-style:         null;
+// $headings-font-weight:        500;
+// $headings-line-height:        1.2;
+// $headings-color:              null;
+
+/**
+* ---------
+* 3. COLORS
+*
+* 3.A Raw colors ----------
+*/
+// Bootstrap Default Colors
+$blue: #2b303b;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #d63384;
+$red: #d1372b; // RIVA Primary Background
+$orange: #e16528; // RIVA Orange Borders
+$yellow: #ffc107;
+$green: #198754;
+$teal: #20c997;
+$cyan: #0dcaf0;
+
+// Theme Colors
+$color--white: #fff;
+$color--gray-white: #eaebec;
+$color--gray-lighter: #cacbcc;
+$color--gray-light: #F2F2F2;
+$color--gray: #7a7b7c;
+$color--gray-dark: #2B303B;
+$color--black: #000;
+$color--red: $red;
+
+$color--orange: $orange;
+$color--orange-light: #fd5100;
+$color--sand: #faf5e8;
+$color--purple: #8e0085;
+$color--light-blue: #81b1ff;
+
+// Temp
+$invert: $color--white;
+
+// Boostrap Default Variables
+$primary: $red;
+$secondary: $blue;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+// $light:         $gray-100;
+// $dark:          $gray-900;
+
+/**
+* 3.B Semantic colors ----------
+*/
+$color--background: $color--white;
+$color--text: $color--gray-dark;
+$color--outer-frame: $color--gray-white;
+
+$color--link: $primary;
+$color--link-hover: $color--orange-light;
+
+$color--clear-visual-focus: $color--purple;
+
+$color--button-text: $color--link;
+$color--button-background: transparent;
+$color--button-text--hover: $color--white;
+$color--button-background--hover: $color--link;
+
+$color--disabled-text: $color--gray-light;
+$color--disabled-background: $color--gray-white;
+
+$color--on-dark--background: $color--gray-dark;
+$color--on-dark--text: $color--white;
+$color--on-dark--link: $color--link;
+$color--on-dark--link-hover: $color--link-hover;
+$color--on-dark--clear-visual-focus: white;
+
+$color--unpublished-node: $color--sand;
+
+/**
+* ---------
+* 4. LAYOUT & MISC
+*/
+/**
+* Sizes for components that other elements must
+* size and position around.
+*/
+$header-height--large: 90px;
+$header-height--small: 62px;
+
+/**
+* default padding for sections
+* and other full-width containers
+*/
+$spacing--horizontal: 20px;
+$spacing--vertical: clamp(30px, 3.75vw, 60px);
+
+/**
+* default amount of space
+* between items in a grid.
+*/
+$grid-gutter: 20px;
+
+/* default shadow */
+$shadow: 0 10px 10px rgba($color--black, 0.1);
+
+/* z-index ... index */
+$z--skip-link: 900; // this should pretty much always be the largest z-index.
+$z--modal: 500;
+$z--site-header-main-menu: 55;
+$z--site-header: 50;
+
+/* default speed of animation transitions */
+$transition-speed: 0.15s;
+$transition-speed--slow: 0.3s;
+$transition-speed--fast: 0.075s;
+
+// ### Image Directory
+$img-dir: '/wp-content/themes/riva-wp/images/';

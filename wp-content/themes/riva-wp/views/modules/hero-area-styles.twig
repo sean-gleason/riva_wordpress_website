@@ -1,0 +1,26 @@
+{% set image = Image(image) %}
+
+<style>
+	.hero-block {
+		background: transparent url('{{ image.src|resize(600) }}') no-repeat;
+		background-size: cover;
+	}
+	@media screen and (min-width: 600px) {
+		.hero-block {
+			background: transparent url('{{ image.src|resize(900) }}') no-repeat;
+			background-size: cover;
+		}
+	}
+	@media screen and (min-width: 900px) {
+		.hero-block {
+			background: transparent url('{{ image.src|resize(1200) }}') no-repeat;
+			background-size: cover;
+		}
+	}
+	@media screen and (min-width: 1200px) {
+		.hero-block {
+			background: transparent url('{{ image.src }}') no-repeat;
+			background-size: cover;
+		}
+	}
+</style>

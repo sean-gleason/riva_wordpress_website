@@ -1,0 +1,61 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+	<section class="search-results-block listing-block{% if block.className %} {{ block.className }}{% endif %} " id="{{ block.id }}">
+		{% set results_count = posts|length %}
+
+		<div class='search-header'>
+
+			{% block breadcrumbs %}
+				{% if breadcrumbs %}
+					<div class="breadcrumbs">{{ breadcrumbs }}</div>
+				{% endif %}
+			{% endblock %}
+
+			<div class='search-result__meta block'>
+				<h2 class="">{{title}}</h2>
+				<div role="doc-subtitle">
+					{% if results > 10 %}
+						<h3 class='h5'>10 of {{ results_count }} {{ search_results }}</h3>
+					{% elseif results_count > 0 %}
+						<h3 class='h5'>{{ results_count }} {{ search_results }}</h3>
+					{% endif %}
+				</div>
+
+				<div class='search-results__try-another'>Not what you're looking for? Try another search.</div>
+			</div>
+
+			{% include 'searchform.twig' %}
+
+		</div>
+
+		<div class="search-results__content l-container">
+
+
+			{% if results_count > 0 %}
+				<div class="search-results__card-wrapper block ">
+					{% for post in posts %}
+
+						{% include '/partial/search-cards.twig' with {
+							index: loop.index,
+							title: post.title,
+							preview: post.preview(300).read_more(false),
+							image: post.thumbnail,
+							url: post.guid
+						} %}
+					{% endfor %}
+				</div>
+			{% else %}
+			<div class='search-results__no-result'>
+				<h2>Nothing Found</h2>
+				<div class="alert alert-info">
+						<p>Sorry, but nothing matched your search criteria. Please try again with some different keywords.</p>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</section>
+
+
+{% endblock %}

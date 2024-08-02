@@ -1,0 +1,41 @@
+{
+    "key": "group_629eac3859ca9",
+    "title": "Menu: Main Menu",
+    "fields": [
+        {
+            "key": "field_629eacbd7e1da",
+            "label": "Featured Content",
+            "name": "featured_content",
+            "type": "group",
+            "instructions": "Each desktop dropdown menu includes an optional area for featured content. This content only shows on Desktop and for top-level navigation items on the <strong>Main Menu<\/strong>",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "location\/main-navigation"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1676053735
+}
