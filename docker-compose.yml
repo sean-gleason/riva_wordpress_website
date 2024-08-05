@@ -4,8 +4,7 @@ services:
     container_name: riva-wp
     depends_on:
     - riva-mysql
-    image: wordpress
-    restart: always
+    image: riva-wordpress:latest 
     ports:
     - "8000:80"
     environment:
@@ -15,9 +14,9 @@ services:
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - ./wp-content:/var/www/html/wp-content
-      - ./wp-config/wp-config.php:/var/www/html/wp-config.php
+      - ./init/wp-config.php:/var/www/html/wp-config.php
     networks:
-      - wpsite
+      - riva-site-net
   riva-mysql:
     container_name: riva_mysql
     image: mysql:8.0
@@ -30,7 +29,7 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
     networks:
-      - wpsite
+      - riva-site-net
   phpmyadmin:
     depends_on:
       - riva-mysql
@@ -44,6 +43,6 @@ services:
       PMA_PASSWORD: wordpress
       UPLOAD_LIMIT: 900M
     networks:
-      - wpsite
+      - riva-site-net
 networks:
-  wpsite:
+  riva-site-net:
