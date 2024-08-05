@@ -7,11 +7,9 @@ services:
     image: riva-wordpress:latest 
     ports:
     - "8000:80"
-    environment:
-      WORDPRESS_DB_HOST: mysql_container
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
+    env_file:
+    - path: ./init/local.env
+      required: true
     volumes:
       - ./wp-content:/var/www/html/wp-content
       - ./init/wp-config.php:/var/www/html/wp-config.php
@@ -21,11 +19,9 @@ services:
     container_name: riva_mysql
     image: mysql:8.0
     restart: always
-    environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
-      MYSQL_ROOT_PASSWORD: wordpress
+    env_file:
+    - path: ./init/local.env
+      required: true
     volumes:
       - ./mysql:/var/lib/mysql
     networks:
