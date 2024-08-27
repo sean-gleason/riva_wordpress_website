@@ -3,3 +3,5 @@ init/wp-config*
 !docker-compose.yml
 *.sql
 wp-config.*
+.idea
+/.idea/
