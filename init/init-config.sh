@@ -7,3 +7,5 @@ sh sed_comm.sh
 cd ..
 docker-compose up
 
+# update wp_options set option_value = 'https://localhost:8001' where option_id = 1;
+# update wp_options set option_value = 'https://localhost:8001' where option_id = 2;

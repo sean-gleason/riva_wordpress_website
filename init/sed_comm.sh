@@ -8,3 +8,4 @@ sed -i '' -e "s/'localhost'/$Var[\"MYSQL_HOST\"]/g" wp-config.php
 # define( 'DB_USER', $_ENV["MYSQL_USER"] );
 # define( 'DB_PASSWORD', $_ENV["MYSQL_PASSWORD"] );
 # define( 'DB_HOST', $_ENV["MYSQL_HOST"]);
+
