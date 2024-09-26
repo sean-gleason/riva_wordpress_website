@@ -1,0 +1,12 @@
+name: Github Actions Workflow for Staging
+run-name: ${{ github.actor }} is running GitHub Actions
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  test-merge-branch:
+    runs-on: wordpress:php8.1-apache
+  steps:
+    - run: echo "asg found pipeline"
