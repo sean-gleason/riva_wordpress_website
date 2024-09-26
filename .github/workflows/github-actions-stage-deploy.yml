@@ -8,6 +8,6 @@ on:
 jobs:
   test-merge-branch:
     runs-on: wordpress:php8.1-apache
-  steps:
-    - name: Hello world
-      run: echo "asg found pipeline"
+    steps:
+      - name: Hello world
+        run: echo "asg found pipeline"
