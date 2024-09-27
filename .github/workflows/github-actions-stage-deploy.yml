@@ -7,7 +7,7 @@ on:
     branches: [master]
 jobs:
   test-merge-branch:
-    runs-on: wordpress:php8.1-apache
+    runs-on: ubuntu-latest
     steps:
       - name: Hello world
         run: echo "asg found pipeline"
