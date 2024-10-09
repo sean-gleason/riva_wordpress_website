@@ -22,6 +22,8 @@ jobs:
           sudo ./aws/install  --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
           which aws
           aws --version
+      - name: Clone the repo (?)
+        uses: actions/checkout@v3
       - name: Configure AWS authentication
         uses: aws-actions/configure-aws-credentials@v1
         with:
