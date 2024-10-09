@@ -1,35 +1,40 @@
-name: Github Actions Workflow for Staging
+name: GitHub Actions Workflow for Staging
 run-name: ${{ github.actor }} is running GitHub Actions
+
 on:
   pull_request:
-    branches: [master]
+    branches: [main]  # Updated from master to main
+
 jobs:
   test-merge-branch:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
+
     steps:
-      - name: Hello world
+      - name: Hello World
         run: echo "asg found pipeline"
-      - name: Install AWS cli
+
+      - name: Install AWS CLI
         run: |
-          aws --version
-          sudo apt-get install curl
-          sudo apt-get install unzip
+          sudo apt-get update
+          sudo apt-get install -y curl unzip
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
-          sudo ./aws/install  --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-          which aws
+          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
           aws --version
-      - name: Clone the repo (?)
-        uses: actions/checkout@v3
-      - name: Configure AWS authentication
-        uses: aws-actions/configure-aws-credentials@v1
+
+      - name: Clone the repo
+        uses: actions/checkout@v3  # Clarified the comment
+
+      - name: Configure AWS Authentication
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::381492191481:role/Github_OIDC
           role-session-name: Github_OIDC
-          aws-region: us-east-1a
+          aws-region: us-east-1
+
       - name: Confirm Role Assumption
         run: |
           aws sts get-caller-identity
