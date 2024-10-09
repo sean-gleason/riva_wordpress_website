@@ -1,8 +1,6 @@
 name: Github Actions Workflow for Staging
 run-name: ${{ github.actor }} is running GitHub Actions
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
 jobs:
@@ -21,3 +19,9 @@ jobs:
           sudo ./aws/install  --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
           which aws
           aws --version
+      - name: Configure AWS authentication
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ARN_OICN_ACCESS }}
+          role-session-name: Github
+          aws-region: us-east-1
