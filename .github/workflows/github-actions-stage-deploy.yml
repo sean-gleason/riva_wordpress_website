@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is running GitHub Actions
 
 on:
   pull_request:
-    branches: [main]  # Updated from master to main
+    branches: [master]
 
 jobs:
   test-merge-branch:
@@ -26,7 +26,7 @@ jobs:
           aws --version
 
       - name: Clone the repo
-        uses: actions/checkout@v3  # Clarified the comment
+        uses: actions/checkout@v3
 
       - name: Configure AWS Authentication
         uses: aws-actions/configure-aws-credentials@v2
