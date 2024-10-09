@@ -6,6 +6,9 @@ on:
 jobs:
   test-merge-branch:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      content: read
     steps:
       - name: Hello world
         run: echo "asg found pipeline"
@@ -22,6 +25,9 @@ jobs:
       - name: Configure AWS authentication
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.AWS_ARN_OICN_ACCESS }}
+          role-to-assume: arn:aws:iam::381492191481:role/Github_OIDC
           role-session-name: Github
-          aws-region: us-east-1
+          aws-region: us-east-1a
+      - name: Confirm Role Assumption
+        run: |
+          aws sts get-caller-identity
