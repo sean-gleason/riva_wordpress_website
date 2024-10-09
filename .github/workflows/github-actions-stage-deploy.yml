@@ -26,7 +26,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::381492191481:role/Github_OIDC
-          role-session-name: Github
+          role-session-name: Github_OIDC
           aws-region: us-east-1a
       - name: Confirm Role Assumption
         run: |
