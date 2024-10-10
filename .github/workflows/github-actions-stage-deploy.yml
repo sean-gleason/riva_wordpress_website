@@ -61,4 +61,4 @@ jobs:
       
       - name: Run SSH
         run: |
-          ssh -t WordPress-1@54.157.21.71 
+          ssh -t bitnami@54.157.21.71 
