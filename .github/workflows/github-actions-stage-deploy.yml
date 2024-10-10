@@ -48,7 +48,7 @@ jobs:
           echo "IP Address is: $INSTANCE_IP"
 
       - name: Start SSH Agent
-        uses: webfactory/ssh-agent@0.9.0
+        uses: webfactory/ssh-agent
         with: 
           ssh-private-key: ${{ secrets.WORDPRESS_1_LIGHTSAIL_SSH }}
           run: |
