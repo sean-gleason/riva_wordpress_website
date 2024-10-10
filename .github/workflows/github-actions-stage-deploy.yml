@@ -49,7 +49,10 @@ jobs:
 
       - name: Add server to known_hosts
         run: |
+          mkdir -p ~/.ssh
+          chomd 700 ~/.ssh
           ssh-keyscan -H 54.157.21.71 >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
 
       - name: Start SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
