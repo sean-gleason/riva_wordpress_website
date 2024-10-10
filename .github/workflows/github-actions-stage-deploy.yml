@@ -47,6 +47,10 @@ jobs:
       #     echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name WordPress-1 --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
       #     echo "IP Address is: $INSTANCE_IP"
 
+      - name: Add server to known_hosts
+        run: |
+          ssh-keyscan -H 54.157.21.71 >> ~/.ssh/known_hosts
+
       - name: Start SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with: 
@@ -54,4 +58,4 @@ jobs:
       
       - name: Run SSH
         run: |
-          ssh WordPress-1@54.157.21.71
+          ssh -t WordPress-1@54.157.21.71 
