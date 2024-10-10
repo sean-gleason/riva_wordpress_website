@@ -52,4 +52,4 @@ jobs:
         with: 
           ssh-private-key: ${{ secrets.WORDPRESS_1_LIGHTSAIL_SSH }}
           run: |
-          ssh WordPress-1@$INSTANCE_IP
+            ssh WordPress-1@$INSTANCE_IP
