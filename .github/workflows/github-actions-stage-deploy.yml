@@ -28,8 +28,8 @@ jobs:
           sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
           aws --version
 
-      - name: Clone the repo
-        uses: actions/checkout@v4
+      # - name: Clone the repo
+      #   uses: actions/checkout@v4
 
       - name: Configure AWS Authentication
         uses: aws-actions/configure-aws-credentials@v3
@@ -42,17 +42,17 @@ jobs:
         run: |
           aws sts get-caller-identity
 
-      # - name: Get IP Address of Lightsail Instance
-      #   run: |
-      #     echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name WordPress-1 --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
-      #     echo "IP Address is: $INSTANCE_IP"
+      - name: Get IP Address of Lightsail Instance
+        run: |
+          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name WordPress-1 --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
+          echo "IP Address is: $INSTANCE_IP"
 
-      # - name: Add server to known_hosts
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     chmod 700 ~/.ssh
-      #     ssh-keyscan -H 54.157.21.71 >> ~/.ssh/known_hosts
-      #     chmod 644 ~/.ssh/known_hosts
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -H 54.157.21.71 >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
 
       - name: Start SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
