@@ -7,6 +7,7 @@ on:
 
 env:
   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+  REMOTE_PATH_ON_LIGHTSAIL: /bitnami/wordpress
 
 jobs:
   test-merge-branch:
@@ -62,3 +63,5 @@ jobs:
       - name: Run SSH
         run: |
           ssh -t bitnami@${{ env.INSTANCE_IP}}
+          cd ${{ env.REMOTE_PATH_ON_LIGHTSAIL }}
+          git pull origin master
