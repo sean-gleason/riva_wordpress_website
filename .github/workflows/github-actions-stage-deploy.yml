@@ -2,7 +2,7 @@ name: GitHub Actions Workflow for Staging
 run-name: ${{ github.actor }} is running GitHub Actions
 
 on:
-  pull:
+  push:
     branches: [master]
   workflow_dispatch:
     inputs:
