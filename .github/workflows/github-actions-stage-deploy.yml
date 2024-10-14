@@ -2,20 +2,31 @@ name: GitHub Actions Workflow for Staging
 run-name: ${{ github.actor }} is running GitHub Actions
 
 on:
-  pull_request:
+  push:
     branches: [master]
+  workflow_dispatch:
+    inputs:
+      tags: 
+        description: "Test scenario tags"
+        required: false
+        type: boolean
+      environment:
+        description: "Environment to run scripts against"
+        type: environment
+        required: true
 
 env:
   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
   REMOTE_PATH_ON_LIGHTSAIL: /bitnami/wordpress
 
 jobs:
-  test-merge-branch:
+  deploy-to-staging:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
-
+    environment:
+      name: "Staging"
     steps:
       - name: Hello World
         run: echo "asg found pipeline"
@@ -28,38 +39,29 @@ jobs:
           unzip awscliv2.zip
           sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
           aws --version
-
-      # - name: Clone the repo
-      #   uses: actions/checkout@v4
-
       - name: Configure AWS Authentication
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: arn:aws:iam::381492191481:role/Github_OIDC
           role-session-name: Github_OIDC
           aws-region: us-east-1
-
       - name: Confirm Role Assumption
         run: |
           aws sts get-caller-identity
-
       - name: Get IP Address of Lightsail Instance
         run: |
           echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name WordPress-1 --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
           echo "IP Address is: ${{ env.INSTANCE_IP}}"
-
       - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keyscan -H ${{ env.INSTANCE_IP}} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
-
       - name: Start SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with: 
-          ssh-private-key: ${{ secrets.WORDPRESS_1_LIGHTSAIL_SSH }}
-      
+          ssh-private-key: ${{ secrets.STAGE_LIGHTSAIL_SSH_KEY }}
       - name: Run SSH
         run: |
           ssh -t bitnami@${{ env.INSTANCE_IP}} /bin/bash << EOF
