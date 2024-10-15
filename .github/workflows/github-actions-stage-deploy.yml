@@ -17,6 +17,7 @@ jobs:
       id-token: write
       contents: read
     environment: stage
+    
     steps:
       - name: Hello World
         run: echo "asg found pipeline"
