@@ -16,8 +16,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment:
-      name: stage
+    # environment:
+    #   name: stage
 
     steps:
       - name: Hello World
