@@ -21,6 +21,9 @@ jobs:
       - name: Hello World
         run: echo "asg found pipeline"
 
+      - name: debug logging
+        rune: echo "DEBUG=true" >> $GITHUB_ENV
+
       - name: Install AWS CLI
         run: |
           sudo apt-get update
