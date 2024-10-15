@@ -3,17 +3,8 @@ run-name: ${{ github.actor }} is running GitHub Actions
 
 on:
   push:
-    branches: [master]
-  workflow_dispatch:
-    inputs:
-      tags: 
-        description: "Test scenario tags"
-        required: false
-        type: boolean
-      environment:
-        description: "Environment to run scripts against"
-        type: environment
-        required: true
+    branches: 
+      - master
 
 env:
   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -25,8 +16,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment:
-      name: stage
+    # environment:
+    #   name: stage
     steps:
       - name: Hello World
         run: echo "asg found pipeline"
