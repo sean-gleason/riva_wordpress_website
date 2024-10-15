@@ -22,7 +22,7 @@ jobs:
         run: echo "asg found pipeline"
 
       - name: debug logging
-        rune: echo "DEBUG=true" >> $GITHUB_ENV
+        run: echo "DEBUG=true" >> $GITHUB_ENV
 
       - name: Install AWS CLI
         run: |
