@@ -48,8 +48,8 @@ jobs:
       - name: Create Ephemeral
         run: |
           echo "EPHEMERAL_INSTANCE=${aws lightsail create-instances-from-snapshot 
-            --instance-name Riva_Website_Effemeral_ID:${{SNAPSHOT_NAME}} 
-            --instance-snapshot-name Riva_Website_Effemeral_SNAPSHOT:${{SNAPSHOT_NAME}} 
+            --instance-name Riva_Website_Effemeral_ID:${{env.SNAPSHOT_NAME}} 
+            --instance-snapshot-name Riva_Website_Effemeral_SNAPSHOT:${{env.SNAPSHOT_NAME}} 
             --availability-zone us-east-1a 
             --bundle-id nano_3_0 
             --return operations.resourceName}" >> $GITHUB_ENV
