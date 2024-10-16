@@ -46,14 +46,14 @@ jobs:
             --return operations.0.resourceName}" >> $GITHUB_ENV
           echo "Ephemeral_snapshot: ${{ env.EPHEMERAL_SNAPSHOT }}"
       - name: Create Ephemeral
-          run: |
-            echo "EPHEMERAL_INSTANCE=${aws lightsail create-instances-from-snapshot 
-              --instance-name Riva_Website_Effemeral_ID:${{SNAPSHOT_NAME}} 
-              --instance-snapshot-name Riva_Website_Effemeral_SNAPSHOT:${{SNAPSHOT_NAME}} 
-              --availability-zone us-east-1a 
-              --bundle-id nano_3_0 
-              --return operations.resourceName}" >> $GITHUB_ENV
-            echo "Ephemeral_Instance: ${{ env.EPHEMERAL_INSTANCE }}"
+        run: |
+          echo "EPHEMERAL_INSTANCE=${aws lightsail create-instances-from-snapshot 
+            --instance-name Riva_Website_Effemeral_ID:${{SNAPSHOT_NAME}} 
+            --instance-snapshot-name Riva_Website_Effemeral_SNAPSHOT:${{SNAPSHOT_NAME}} 
+            --availability-zone us-east-1a 
+            --bundle-id nano_3_0 
+            --return operations.resourceName}" >> $GITHUB_ENV
+          echo "Ephemeral_Instance: ${{ env.EPHEMERAL_INSTANCE }}"
 
   deploy-to-staging:
     runs-on: ubuntu-latest
