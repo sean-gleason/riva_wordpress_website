@@ -38,7 +38,7 @@ jobs:
       - name: Confirm Role Assumption
         run: |
           aws sts get-caller-identity
-      - nune: Create Snapshot
+      - name: Create Snapshot
         run: |
           echo "EPHEMERAL_SNAPSHOT=${aws lightsail create-instance-snapshot 
             --instance-snapshot-name RW_EPHEMERAL_SNAPSHOT 
