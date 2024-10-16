@@ -1,4 +1,5 @@
 mysql/*
+mysql*
 init/wp-config*
 !docker-compose.yml
 *.sql
