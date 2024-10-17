@@ -43,7 +43,7 @@ jobs:
           aws lightsail create-instance-snapshot \
             --instance-snapshot-name ${{ env.SNAPSHOT_NAME }} \
             --instance-name env.INSTANCE_NAME \
-            --return operations[0].resourceName \
+            --query operations[0].resourceName \
             --output text
       - name: Create Ephemeral Environment
         run: |
@@ -52,7 +52,7 @@ jobs:
             --instance-snapshot-name ${{ env.SNAPSHOT_NAME }} \
             --availability-zone us-east-1a \
             --bundle-id nano_3_0 \
-            --return operations[0].resourceName}" >> $GITHUB_ENV
+            --query operations[0].resourceName}" >> $GITHUB_ENV
           echo "Ephemeral_Instance: ${{ env.EPHEMERAL_INSTANCE }}"
 
   deploy-to-staging:
