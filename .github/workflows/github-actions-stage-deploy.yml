@@ -40,18 +40,18 @@ jobs:
           aws sts get-caller-identity
       - name: Create Snapshot
         run: |
-          aws lightsail create-instance-snapshot 
-            --instance-snapshot-name ${{ env.SNAPSHOT_NAME }}
-            --instance-name env.INSTANCE_NAME 
-            --return operations[0].resourceName
+          aws lightsail create-instance-snapshot \
+            --instance-snapshot-name ${{ env.SNAPSHOT_NAME }} \
+            --instance-name env.INSTANCE_NAME \
+            --return operations[0].resourceName \
             --output text
       - name: Create Ephemeral Environment
         run: |
-          echo "EPHEMERAL_INSTANCE=${aws lightsail create-instances-from-snapshot 
-            --instance-name Riva_Website_Effemeral_ID:${{ github.run_number }} 
-            --instance-snapshot-name ${{ env.SNAPSHOT_NAME }} 
-            --availability-zone us-east-1a 
-            --bundle-id nano_3_0 
+          echo "EPHEMERAL_INSTANCE=${aws lightsail create-instances-from-snapshot \
+            --instance-name Riva_Website_Effemeral_ID:${{ github.run_number }} \
+            --instance-snapshot-name ${{ env.SNAPSHOT_NAME }} \
+            --availability-zone us-east-1a \
+            --bundle-id nano_3_0 \
             --return operations[0].resourceName}" >> $GITHUB_ENV
           echo "Ephemeral_Instance: ${{ env.EPHEMERAL_INSTANCE }}"
 
