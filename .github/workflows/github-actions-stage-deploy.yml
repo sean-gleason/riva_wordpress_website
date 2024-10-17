@@ -46,6 +46,16 @@ jobs:
             --instance-name ${{ env.INSTANCE_NAME }} \
             --query 'operations[0].resourceName' \
             --output text
+      - name: Get Snapshot Status
+        run: |
+          SNAPSHOT_STATUS='pending'
+          while [$SNAPSHOT_STATUS =~ "pending"]
+            do
+              SNAPSHOT_STATUS=$(aws lightsail get-instance-snapshots \
+                --query "instanceSnapshots[?name==$SNAPSHOT_NAME].state" \
+                --output text)
+            done
+
       - name: Create Ephemeral Environment
         run: |
           EPHEMERAL_INSTANCE=$(aws lightsail create-instances-from-snapshot \
@@ -96,7 +106,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with: 
           ssh-private-key: ${{ secrets.STAGE_LIGHTSAIL_SSH_KEY }}
-      - name: Run SSH
+      - name: Run ssh And git pull 
         run: |
           ssh -t bitnami@${{ env.INSTANCE_IP}} /bin/bash << EOF
             cd ${{ env.REMOTE_PATH_ON_LIGHTSAIL }}
