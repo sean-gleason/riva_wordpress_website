@@ -52,7 +52,7 @@ jobs:
           while [ $SNAPSHOT_STATUS == "pending" ]; do
               echo "$SNAPSHOT_STATUS"
               SNAPSHOT_STATUS=$(aws lightsail get-instance-snapshots \
-                --query "instanceSnapshots[?name==$SNAPSHOT_NAME].state" \
+                --query "instanceSnapshots[?name=='$SNAPSHOT_NAME'].state" \
                 --output text)
               sleep 5
             done
