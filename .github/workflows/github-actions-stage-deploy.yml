@@ -48,12 +48,12 @@ jobs:
             --output text
       - name: Get Snapshot Status
         run: |
-          SNAPSHOT_STATUS=pending
-          while [$SNAPSHOT_STATUS =~ "pending"]
-            do
+          SNAPSHOT_STATUS="pending"
+          while [ $SNAPSHOT_STATUS =~ "pending" ]; do
               SNAPSHOT_STATUS=$(aws lightsail get-instance-snapshots \
                 --query "instanceSnapshots[?name==$SNAPSHOT_NAME].state" \
                 --output text)
+              sleep 5
             done
 
       - name: Create Ephemeral Environment
