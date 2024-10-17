@@ -42,7 +42,7 @@ jobs:
         run: |
           aws lightsail create-instance-snapshot \
             --instance-snapshot-name ${{ env.SNAPSHOT_NAME }} \
-            --instance-name env.INSTANCE_NAME \
+            --instance-name ${{ env.INSTANCE_NAME }} \
             --query operations[0].resourceName \
             --output text
       - name: Create Ephemeral Environment
