@@ -94,7 +94,10 @@ jobs:
           set -e  #Ensure the script exits if any command fails
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh-keyscan -H ${{ env.INSTANCE_IP }} >> ~/.ssh/known_hosts || { echo "ssh-keyscan failed"; exit 1; }
+          for i in {1..5}; do
+            ssh-keyscan -H ${{ env.INSTANCE_IP }} >> ~/.ssh/known_hosts && break || { echo "ssh-keyscan failed"; exit 1; }
+            sleep 5
+          done
           chmod 644 ~/.ssh/known_hosts
 
       - name: Start SSH Agent
