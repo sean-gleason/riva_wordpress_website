@@ -19,6 +19,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    environment: stage
     steps:
       - name: Install AWS CLI
         run: |
@@ -71,14 +72,14 @@ jobs:
 
       - name: Get IP Address of Lightsail Instance
         run: |
-          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name ${{ env.EPHEMERAL_NAME }} --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
+          INSTANCE_IP=$(aws lightsail get-instance --instance-name ${{ env.EPHEMERAL_NAME }} --query instance.publicIpAddress --output text)
+          echo "INSTANCE_IP=$INSTANCE_IP" >> $GITHUB_ENV
           echo "IP Address is: $INSTANCE_IP"
 
       - name: Add server to known_hosts
         run: |
-          mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh-keyscan -H ${{ env.INSTANCE_IP}} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ env.INSTANCE_IP }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       - name: Start SSH Agent
