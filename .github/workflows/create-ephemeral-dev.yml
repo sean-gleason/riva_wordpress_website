@@ -70,6 +70,18 @@ jobs:
             --query 'operations[0].resourceName' \
             --output text
 
+      - name: Get Ephemeral Environment Status
+        run: |
+          INSTANCE_STATUS == "pending"
+          while [ $INSTANCE_STATUS == "pending" ]; do
+            echo "$INSTANCE_STATUS"
+            aws lightsail get-instance \
+              --instance-name ${{ env.EPHEMERAL_NAME }} \
+              --query instance.state.name \
+              --output text
+            sleep 5
+          done
+          
       - name: Get IP Address of Lightsail Instance
         run: |
           INSTANCE_IP=$(aws lightsail get-instance --instance-name ${{ env.EPHEMERAL_NAME }} --query instance.publicIpAddress --output text)
