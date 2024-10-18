@@ -72,13 +72,13 @@ jobs:
 
       - name: Get Ephemeral Environment Status
         run: |
-          INSTANCE_STATUS == "pending"
+          INSTANCE_STATUS="pending"
           while [ $INSTANCE_STATUS == "pending" ]; do
             echo "$INSTANCE_STATUS"
-            aws lightsail get-instance \
+            INSTANCE_STATUS=$(aws lightsail get-instance \
               --instance-name ${{ env.EPHEMERAL_NAME }} \
               --query instance.state.name \
-              --output text
+              --output text)
             sleep 5
           done
           
