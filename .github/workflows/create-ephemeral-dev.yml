@@ -90,9 +90,11 @@ jobs:
 
       - name: Add server to known_hosts
         run: |
+          echo ${{ env.INSTANCE_IP }}
+          set -e  #Ensure the script exits if any command fails
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh-keyscan -H ${{ env.INSTANCE_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ env.INSTANCE_IP }} >> ~/.ssh/known_hosts || { echo "ssh-keyscan failed"; exit 1; }
           chmod 644 ~/.ssh/known_hosts
 
       - name: Start SSH Agent
