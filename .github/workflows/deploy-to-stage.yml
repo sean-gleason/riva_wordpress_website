@@ -1,4 +1,4 @@
-name: GitHub Actions Workflow for Staging
+name: Deploy Changes to Integration
 run-name: ${{ github.actor }} is running GitHub Actions
 
 on:
@@ -55,7 +55,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with: 
           ssh-private-key: ${{ secrets.STAGE_LIGHTSAIL_SSH_KEY }}
-          
+
       - name: Run ssh And git pull 
         run: |
           ssh -t bitnami@${{ env.INSTANCE_IP}} /bin/bash << EOF
