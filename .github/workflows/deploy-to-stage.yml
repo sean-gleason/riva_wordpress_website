@@ -18,8 +18,6 @@ jobs:
       contents: read
     environment: stage
     steps:
-      - name: Hello World
-        run: echo "asg found pipeline"
       - name: Install AWS CLI
         run: |
           sudo apt-get update
@@ -51,7 +49,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with: 
           ssh-private-key: ${{ secrets.STAGE_LIGHTSAIL_SSH_KEY }}
-      - name: Run SSH
+      - name: Run ssh And git pull 
         run: |
           ssh -t bitnami@${{ env.INSTANCE_IP}} /bin/bash << EOF
             cd ${{ env.REMOTE_PATH_ON_LIGHTSAIL }}

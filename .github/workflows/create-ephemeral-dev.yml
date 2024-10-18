@@ -9,19 +9,17 @@ on:
 env:
   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
   REMOTE_PATH_ON_LIGHTSAIL: /bitnami/wordpress
-  SNAPSHOT_NAME: RW_EPHEMERAL_SNAPSHOT-${{ github.run_number }} 
-  EPHEMERAL_NAME: RW_EPHEMERAL_ID-${{ github.run_number }}
+  SNAPSHOT_NAME: RWebsite_EPHEMERAL_SNAPSHOT-${{ github.run_number }} 
+  EPHEMERAL_NAME: RWWebsite_EPHEMERAL_ID-${{ github.run_number }}
   INSTANCE_NAME: WordPress-1
 
 jobs:
-  predeploy-test-build:
+  setup-development-instance:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
     steps:
-      - name: Hello World
-        run: echo "asg found pipeline"
       - name: Install AWS CLI
         run: |
           sudo apt-get update
@@ -30,15 +28,18 @@ jobs:
           unzip awscliv2.zip
           sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
           aws --version
+      
       - name: Configure AWS Authentication
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: arn:aws:iam::381492191481:role/Github_OIDC
           role-session-name: Github_OIDC
           aws-region: us-east-1
+      
       - name: Confirm Role Assumption
         run: |
           aws sts get-caller-identity
+      
       - name: Create Snapshot
         run: |
           aws lightsail create-instance-snapshot \
@@ -46,6 +47,7 @@ jobs:
             --instance-name ${{ env.INSTANCE_NAME }} \
             --query 'operations[0].resourceName' \
             --output text
+      
       - name: Get Snapshot Status
         run: |
           SNAPSHOT_STATUS="pending"
@@ -59,57 +61,40 @@ jobs:
 
       - name: Create Ephemeral Environment
         run: |
-          EPHEMERAL_INSTANCE=$(aws lightsail create-instances-from-snapshot \
+          EPHEMERAL_ID=$(aws lightsail create-instances-from-snapshot \
             --instance-name $EPHEMERAL_NAME \
             --instance-snapshot-name $SNAPSHOT_NAME \
             --availability-zone us-east-1a \
             --bundle-id nano_3_0 \
             --query 'operations[0].resourceName' \
             --output text )
-          echo "EPHEMERAL_INSTANCE=$EPHEMERAL_INSTANCE" >> $GITHUB_ENV
-          echo "Ephemeral_Instance: $EPHEMERAL_INSTANCE"
+          echo "EPHEMERAL_ID=$EPHEMERAL_ID" >> $GITHUB_ENV
+          echo "Ephemeral_ID: $EPHEMERAL_ID"
 
-  deploy-to-staging:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    environment: stage
-    steps:
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl unzip
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-          aws --version
-      - name: Configure AWS Authentication
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          role-to-assume: arn:aws:iam::381492191481:role/Github_OIDC
-          role-session-name: Github_OIDC
-          aws-region: us-east-1
-      - name: Confirm Role Assumption
-        run: |
-          aws sts get-caller-identity
       - name: Get IP Address of Lightsail Instance
         run: |
-          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name WordPress-1 --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
+          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name $EPHEMERAL_ID --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
           echo "IP Address is: ${{ env.INSTANCE_IP}}"
+
       - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keyscan -H ${{ env.INSTANCE_IP}} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
+
       - name: Start SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with: 
           ssh-private-key: ${{ secrets.STAGE_LIGHTSAIL_SSH_KEY }}
+          
       - name: Run ssh And git pull 
         run: |
           ssh -t bitnami@${{ env.INSTANCE_IP}} /bin/bash << EOF
             cd ${{ env.REMOTE_PATH_ON_LIGHTSAIL }}
             git pull origin master
           EOF
+      
+      - name: Echo IP Addess
+        run: |
+          echo "https://$env.INSTANCE_IP/wp-login"
