@@ -10,7 +10,7 @@ env:
   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
   REMOTE_PATH_ON_LIGHTSAIL: /bitnami/wordpress
   SNAPSHOT_NAME: RWebsite_EPHEMERAL_SNAPSHOT-${{ github.run_number }} 
-  EPHEMERAL_NAME: RWWebsite_EPHEMERAL_ID-${{ github.run_number }}
+  EPHEMERAL_NAME: RWebsite_EPHEMERAL_ID-${{ github.run_number }}
   INSTANCE_NAME: WordPress-1
 
 jobs:
@@ -61,19 +61,17 @@ jobs:
 
       - name: Create Ephemeral Environment
         run: |
-          EPHEMERAL_ID=$(aws lightsail create-instances-from-snapshot \
+          aws lightsail create-instances-from-snapshot \
             --instance-name $EPHEMERAL_NAME \
             --instance-snapshot-name $SNAPSHOT_NAME \
             --availability-zone us-east-1a \
             --bundle-id nano_3_0 \
             --query 'operations[0].resourceName' \
-            --output text )
-          echo "EPHEMERAL_ID=$EPHEMERAL_ID" >> $GITHUB_ENV
-          echo "Ephemeral_ID: $EPHEMERAL_ID"
+            --output text
 
       - name: Get IP Address of Lightsail Instance
         run: |
-          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name $EPHEMERAL_ID --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
+          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name $EPHEMERAL_NAME --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
           echo "IP Address is: ${{ env.INSTANCE_IP}}"
 
       - name: Add server to known_hosts
