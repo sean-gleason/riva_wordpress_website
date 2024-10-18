@@ -1,4 +1,4 @@
-name: Create Ephemeral Development Instance
+name: Create Temporary Development Instance
 run-name: ${{ github.actor }} is running GitHub Actions
 
 on:
@@ -71,8 +71,8 @@ jobs:
 
       - name: Get IP Address of Lightsail Instance
         run: |
-          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name $EPHEMERAL_NAME --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
-          echo "IP Address is: ${{ env.INSTANCE_IP}}"
+          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name $env.EPHEMERAL_NAME --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
+          echo "IP Address is: $INSTANCE_IP"
 
       - name: Add server to known_hosts
         run: |
