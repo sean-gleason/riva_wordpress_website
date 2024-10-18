@@ -62,8 +62,8 @@ jobs:
       - name: Create Ephemeral Environment
         run: |
           aws lightsail create-instances-from-snapshot \
-            --instance-name $EPHEMERAL_NAME \
-            --instance-snapshot-name $SNAPSHOT_NAME \
+            --instance-name ${{ env.EPHEMERAL_NAME }} \
+            --instance-snapshot-name ${{ env.SNAPSHOT_NAME }} \
             --availability-zone us-east-1a \
             --bundle-id nano_3_0 \
             --query 'operations[0].resourceName' \
@@ -71,7 +71,7 @@ jobs:
 
       - name: Get IP Address of Lightsail Instance
         run: |
-          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name $env.EPHEMERAL_NAME --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
+          echo "INSTANCE_IP=$(aws lightsail get-instance --instance-name ${{ env.EPHEMERAL_NAME }} --query instance.publicIpAddress --output text)" >> $GITHUB_ENV
           echo "IP Address is: $INSTANCE_IP"
 
       - name: Add server to known_hosts
