@@ -107,7 +107,7 @@ jobs:
           
       - name: Run ssh And git pull 
         run: |
-          ssh -t bitnami@${{ env.INSTANCE_IP}} /bin/bash << EOF
+          ssh -t -v bitnami@${{ env.INSTANCE_IP}} /bin/bash << EOF
             cd ${{ env.REMOTE_PATH_ON_LIGHTSAIL }}
             git pull origin master
           EOF
