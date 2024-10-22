@@ -106,6 +106,9 @@ jobs:
           ssh-private-key: ${{ secrets.STAGE_LIGHTSAIL_SSH_KEY }}
           
       - name: Run ssh And git pull 
+        env: 
+          INSTANCE_IP: ${{ inputs.INSTANCE_IP }}
+          REMOTE_PATH_ON_LIGHTSAIL: ${{ inputs.REMOTE_PATH_ON_LIGHTSAIL }}
         run: |
           ssh -t -v bitnami@${{ env.INSTANCE_IP}} /bin/bash << EOF
             cd ${{ env.REMOTE_PATH_ON_LIGHTSAIL }}
